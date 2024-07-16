@@ -1,0 +1,126 @@
+h2
+  margin-block-start: 0.3em
+  margin-block-end: .3em
+
+.overflow
+  min-height: 6em
+  max-height: 25em
+  overflow: auto
+
+.pre
+  white-space: pre
+
+.reversed-delete
+  background: $negative
+  color: white
+
+.q-btn-dropdown--split .q-btn-dropdown__arrow-container
+  border-left: 1px solid currentColor
+
+.vgt-loading__content
+  background-color: $info !important
+  color: black !important
+
+.vgt-selection-info-row
+  padding: 10px 16px !important
+  background: inherit !important
+  color: inherit !important
+
+.vgt-selection-info-row a,
+.vgt-wrap__footer .footer__navigation__page-btn
+  background-color: $info !important
+  color: black !important
+  text-decoration: none
+  text-transform: uppercase
+  font-size: 14px !important
+  font-weight: 500 !important
+  border-radius: 3px
+  margin-top: 4px
+  padding: 3px 8px
+  position: relative
+
+.vgt-selection-info-row a:before
+  transition: box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.5, 1)
+  content: ""
+  display: block
+  position: absolute
+  left: 0
+  right: 0
+  top: 0
+  bottom: 0
+  border-radius: inherit
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12)
+
+.vgt-wrap__footer .footer__navigation__page-btn span
+  font-size: 14px !important
+
+.vgt-wrap__footer .footer__navigation__page-btn .chevron.right::after
+  border-left: 6px solid black !important
+
+.vgt-wrap__footer .footer__navigation__page-btn .chevron.left::after
+  border-right: 6px solid black !important
+
+div.ace_editor
+  font-size: 14px
+  line-height: 1.5em
+
+.q-table th,
+.q-table tbody td
+  font-size: inherit
+
+.d2h-diff-table
+  font-size: 11px !important
+
+.d2h-cntx
+  background-color: #fff
+
+.body--light
+  main
+    background-color: $grey-2
+
+  .more-filters
+    background-color: #fff
+
+  header
+    background-color: $brown-7
+
+  footer
+    background-color: $brown-1
+    color: $blue-grey-8
+
+  .q-chip
+    background-color: transparent
+
+.body--dark
+  --q-color-primary: #29A9F4
+
+  header
+    background-color: $blue-grey-10
+
+  footer
+    background-color: $blue-grey-8
+    color: $brown-1
+
+  table.vgt-table,
+  .vgt-table th.vgt-checkbox-col,
+  .vgt-table thead th,
+  .vgt-table th.vgt-row-header,
+  .vgt-wrap__footer,
+  .vgt-input,
+  .vgt-select,
+  .vgt-selection-info-row
+    background: transparent
+    color: white
+
+  table.vgt-table td
+    color: white
+
+  .vgt-table.striped tbody tr:nth-of-type(odd)
+    background: rgb(58, 65, 73, 0.7)
+
+  .vgt-select option
+    background: #2F353A
+    color: white
+
+  .vgt-selection-info-row a
+    color: $primary

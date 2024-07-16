@@ -1,0 +1,81 @@
+{
+  "name": "migasfree-frontend",
+  "version": "5.0",
+  "description": "Systems Management System (frontend) (with Quasar framework)",
+  "productName": "Migasfree Frontend",
+  "author": "Jose Antonio Chavarría <jachavar@gmail.com>",
+  "license": "GPLv3",
+  "homepage": "https://github.com/migasfree/migasfree-frontend",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/migasfree/migasfree-frontend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/migasfree/migasfree-frontend/issues"
+  },
+  "private": true,
+  "scripts": {
+    "lint": "eslint . --ext .js,.vue,.ts --fix --ignore-path .gitignore",
+    "format": "prettier --write \"**/*.{js,vue,css,html,md,json}\" --ignore-path .gitignore",
+    "format:check": "prettier --check . --ignore-path .gitignore",
+    "test": "echo \"No test specified\" && exit 0",
+    "gettext-extract": "vue-gettext-extract",
+    "gettext-compile": "vue-gettext-compile"
+  },
+  "dependencies": {
+    "@quasar/extras": "1.16.11",
+    "@stomp/stompjs": "^7.0.0",
+    "@vue-leaflet/vue-leaflet": "0.10.1",
+    "axios": "1.6.1",
+    "core-js": "3.36.1",
+    "dayjs": "1.11.10",
+    "echarts": "5.4.3",
+    "js-abbreviation-number": "1.4.0",
+    "leaflet": "1.9.4",
+    "performant-array-to-tree": "1.11.0",
+    "pinia": "2.1.7",
+    "pluralize": "8.0.0",
+    "quasar": "2.16.2",
+    "sockjs-client": "^1.6.1",
+     "text-clipper": "2.2.0",
+    "typeface-dosis": "1.1.13",
+    "v-code-diff": "1.7.2",
+    "vue": "3.3.4",
+    "vue-echarts": "6.6.1",
+    "vue-good-table-next": "0.2.1",
+    "vue-router": "4.2.5",
+    "vue3-ace-editor": "2.2.2",
+    "vue3-gettext": "2.4.0"
+  },
+  "resolutions": {
+    "vue": "3.3.4"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "7.23.3",
+    "@quasar/app-webpack": "3.13.2",
+    "@quasar/quasar-app-extension-qmarkdown": "2.0.0-beta.10",
+    "dotenv": "16.3.1",
+    "eslint": "8.53.0",
+    "eslint-config-prettier": "9.0.0",
+    "eslint-plugin-prettier": "5.0.1",
+    "eslint-plugin-vue": "9.18.1",
+    "eslint-webpack-plugin": "4.0.1",
+    "prettier": "3.1.0"
+  },
+  "browserslist": [
+    "last 10 Chrome versions",
+    "last 10 Firefox versions",
+    "last 4 Edge versions",
+    "last 7 Safari versions",
+    "last 8 Android versions",
+    "last 8 ChromeAndroid versions",
+    "last 8 FirefoxAndroid versions",
+    "last 10 iOS versions",
+    "last 5 Opera versions"
+  ],
+  "engines": {
+    "node": ">= 16",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  }
+}
