@@ -8,7 +8,9 @@
     </template>
     <q-list>
       <q-item>
-        <q-tooltip><translate>User</translate></q-tooltip>
+        <q-tooltip>
+          <translate>User</translate>
+        </q-tooltip>
 
         <q-item-section avatar>
           <q-icon name="mdi-account" />
@@ -20,7 +22,9 @@
       </q-item>
 
       <q-item v-if="organization">
-        <q-tooltip><translate>Organization</translate></q-tooltip>
+        <q-tooltip>
+          <translate>Organization</translate>
+        </q-tooltip>
 
         <q-item-section avatar>
           <q-icon name="mdi-bank" />
@@ -34,73 +38,51 @@
       <q-separator />
 
       <q-item>
-        <q-tooltip><translate>Change App Language</translate></q-tooltip>
+        <q-tooltip>
+          <translate>Change App Language</translate>
+        </q-tooltip>
 
         <q-item-section avatar>
           <q-icon name="mdi-earth" />
         </q-item-section>
 
         <q-item-section>
-          <q-select
-            v-model="currentLanguage"
-            standout
-            :options="languages"
-            option-value="label"
-            option-label="value"
-            :dense="true"
-            :options-dense="true"
-            @update:model-value="changeAppLanguage"
-          />
+          <q-select v-model="currentLanguage" standout :options="languages" option-value="label" option-label="value"
+            :dense="true" :options-dense="true" @update:model-value="changeAppLanguage" />
         </q-item-section>
       </q-item>
 
       <q-item>
-        <q-tooltip><translate>Change Domain</translate></q-tooltip>
+        <q-tooltip>
+          <translate>Change Domain</translate>
+        </q-tooltip>
 
         <q-item-section avatar>
           <q-icon :name="modelIcon('domains')" />
         </q-item-section>
 
         <q-item-section>
-          <q-select
-            v-model="domainPreference"
-            standout
-            :options="domains"
-            option-value="id"
-            option-label="name"
-            :dense="true"
-            :options-dense="true"
-            @update:model-value="updateDomainPreference"
-          />
+          <q-select v-model="domainPreference" standout :options="domains" option-value="id" option-label="name"
+            :dense="true" :options-dense="true" @update:model-value="updateDomainPreference" />
         </q-item-section>
       </q-item>
 
       <q-item>
-        <q-tooltip><translate>Change Scope</translate></q-tooltip>
+        <q-tooltip>
+          <translate>Change Scope</translate>
+        </q-tooltip>
 
         <q-item-section avatar>
           <q-icon :name="modelIcon('scopes')" />
         </q-item-section>
 
         <q-item-section>
-          <q-select
-            v-model="scopePreference"
-            standout
-            :options="filteredScopes"
-            option-value="id"
-            option-label="name"
-            :dense="true"
-            :options-dense="true"
-            @update:model-value="updateScopePreference"
-          />
+          <q-select v-model="scopePreference" standout :options="filteredScopes" option-value="id" option-label="name"
+            :dense="true" :options-dense="true" @update:model-value="updateScopePreference" />
         </q-item-section>
       </q-item>
 
-      <q-item
-        v-close-popup
-        clickable
-        :to="{ name: 'user-profile-change-password', params: { id: user.id } }"
-      >
+      <q-item v-close-popup clickable :to="{ name: 'user-profile-change-password', params: { id: user.id } }">
         <q-item-section avatar>
           <q-icon :name="appIcon('password')" />
         </q-item-section>
@@ -128,7 +110,6 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useGettext } from 'vue3-gettext'
 import { useQuasar } from 'quasar'
-
 import { api } from 'boot/axios'
 import { gettext } from 'boot/gettext'
 import { useAuthStore } from 'stores/auth'
@@ -202,15 +183,16 @@ export default {
     }
 
     const updatePreferences = async (data) => {
+      console.log('updatePreferences')
       await api
-        .patch(`/api/v1/token/user-profiles/${authStore.user.id}/`, data)
+        .get(`/account/auth/me`, data)
         .then((response) => {
           uiStore.notifySuccess($gettext('Preferences changed!'))
 
-          authStore.setUser(response.data)
+          authStore.setUser(response.data.data)
           userAccount.value.hide()
 
-          window.location.reload(true)
+          //  window.location.reload(true)
         })
         .catch((error) => {
           uiStore.notifyError(error)
@@ -228,6 +210,12 @@ export default {
     })
 
     onMounted(async () => {
+      console.log('onMounted')
+      await updatePreferences({
+        scope_preference: scopePreference.value.id
+          ? scopePreference.value.id
+          : null,
+      })
       Object.entries(gettext.available).map(([label, value]) => {
         languages.value.push({ label, value })
       })

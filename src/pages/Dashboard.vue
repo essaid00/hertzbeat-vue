@@ -11,9 +11,9 @@
     <div class="row q-pb-md">
       <div class="col-12">
         <q-list id="events-history" :class="[
-          'q-card q-card--flat no-shadow',
-          $q.dark.isActive ? 'q-card--dark q-dark' : '',
-        ]" bordered>
+      'q-card q-card--flat no-shadow',
+      $q.dark.isActive ? 'q-card--dark q-dark' : '',
+    ]" bordered>
           <q-expansion-item @show="loadEventsHistory">
             <template #header>
               <q-item-section>

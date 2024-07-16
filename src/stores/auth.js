@@ -190,6 +190,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   function setUser(value) {
+    console.log(value)
     user.value = value
     LocalStorage.set('auth.user', user.value)
   }
