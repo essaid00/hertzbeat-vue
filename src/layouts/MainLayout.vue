@@ -6,9 +6,9 @@
           $gettext('Menu') }}</q-tooltip>
         </q-btn>
 
-        <q-btn stretch flat label="migasfree" :to="{ name: 'home' }" no-caps size="22px">
-          <q-avatar class="q-pl-sm" size="22px">
-            <img src="../assets/migasfree-logo.svg" alt="migasfree logo" />
+        <q-btn stretch flat label="Essaid App" :to="{ name: 'home' }" no-caps size="22px">
+          <q-avatar class="q-pl-sm" size="52px">
+            <img class="logo" src="../assets/brand.svg" alt="" />
           </q-avatar>
           <q-tooltip>{{ $gettext('Dashboard') }}
             <template v-if="organization">[{{ organization }}]</template></q-tooltip>
@@ -35,14 +35,6 @@
     </q-drawer>
 
     <q-page-container>
-      <p>llllllllll</p>
-      <div>
-        <h1>WebSocket Chat</h1>
-        <input v-model="message" placeholder="Enter your message">
-        <button @click="sendMessageHandler">Send</button>
-      </div>
-      <q-btn flat stretch text-color="green" label="migasfree" icon="mdi-account-arrow-right"
-        @click="sendMessageHandler" />
       <q-banner v-if="hasDomainOrScopePreference" class="bg-warning text-black">
         <template #avatar>
           <q-icon name="mdi-alert-outline" />

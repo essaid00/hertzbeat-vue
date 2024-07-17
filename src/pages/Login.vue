@@ -3,7 +3,7 @@
     <q-card flat :style="$q.screen.lt.sm ? { width: '80%' } : { width: '30%' }">
       <q-card-section>
         <q-avatar size="110px" class="absolute-center shadow-10" :color="$q.dark.isActive ? 'blue-grey-9' : 'white'">
-          <img id="logo" src="../assets/migasfree-logo.svg" alt="migasfree logo" />
+          <img class="logo" src="../assets/brand.svg" alt="" />
         </q-avatar>
       </q-card-section>
 
@@ -29,16 +29,16 @@
           </q-input>
 
           <q-input id="credential" v-model="model.credential" lazy-rules outlined counter :rules="[
-            (val) => !!val || $gettext('* Required'),
-            (val) =>
-              val.length >= MIN_PASSWORD_LEN ||
-              $gettextInterpolate(
-                $gettext('Please use minimum %{n} characters'),
-                {
-                  n: MIN_PASSWORD_LEN,
-                },
-              ),
-          ]" :type="showcredential ? 'text' : 'credential'">
+      (val) => !!val || $gettext('* Required'),
+      (val) =>
+        val.length >= MIN_PASSWORD_LEN ||
+        $gettextInterpolate(
+          $gettext('Please use minimum %{n} characters'),
+          {
+            n: MIN_PASSWORD_LEN,
+          },
+        ),
+    ]" :type="showcredential ? 'text' : 'credential'">
             <template #label>
               <translate>credential</translate>
             </template>
