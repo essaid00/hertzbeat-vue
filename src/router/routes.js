@@ -8,6 +8,11 @@ const routes = [
         name: 'home',
         component: () => import('pages/Dashboard'),
       },
+      {
+        path: '/monitoring/monitors',
+        name: 'monitors',
+        component: () => import('pages/monitoring/index'),
+      },
 
       {
         path: '/platforms/results',

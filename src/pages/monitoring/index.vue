@@ -2,15 +2,18 @@
   <q-page padding>
     <Breadcrumbs :items="breadcrumbs" />
 
+    <Header :title="title" :icon="titleIcon" :has-export-button="false" />
+
+    <SearchFilter v-model="searchText" class="q-pb-md" @search="search" />
+
     <div class="row">
-      <div class="col">
-        <PieChart :title="$gettext('Attributes / Formula')" end-point="/summary/v1" :url="url" @get-link="goTo" />
-      </div>
-      <div class="col">
-        <PieChart :title="$gettext('Attributes / Formula')" end-point="/summary/v1" :url="url" @get-link="goTo" />
-      </div>
-      <div class="col">
-        <PieChart :title="$gettext('Attributes / Formula')" end-point="/summary/v1" :url="url" @get-link="goTo" />
+      <div class="col-12">
+        <StackedBarChart
+          :title="$gettext('Notifications / Month')"
+          end-point="/api/v1/token/stats/notifications/month/"
+          month-selector
+          @get-link="goTo"
+        />
       </div>
     </div>
   </q-page>
@@ -25,21 +28,23 @@ import { useRouter } from 'vue-router'
 import Breadcrumbs from 'components/ui/Breadcrumbs'
 import Header from 'components/ui/Header'
 import SearchFilter from 'components/ui/SearchFilter'
-import PieChart from 'components/chart/Pie'
+import StackedBarChart from 'components/chart/StackedBar'
 
 import { appIcon, modelIcon } from 'composables/element'
 
 export default {
   components: {
     Breadcrumbs,
-    PieChart,
+    Header,
+    SearchFilter,
+    StackedBarChart,
   },
   setup() {
     const router = useRouter()
     const { $gettext } = useGettext()
 
-    const titleIcon = modelIcon('attributes')
-    const title = $gettext('Attributes')
+    const titleIcon = modelIcon('notifications')
+    const title = $gettext('Notifications')
     useMeta({ title })
 
     const searchText = ref('')
@@ -60,15 +65,22 @@ export default {
       },
     ])
 
-    const url = { name: 'attributes-list' }
+    const url = { name: 'notifications-list' }
 
     const goTo = (params) => {
-      if (params.data.property_att_id) {
-        router.push(
-          Object.assign(url, {
-            query: { property_id: params.data.property_att_id },
-          }),
-        )
+      if (params.data.created_at__lt) {
+        let query = {
+          created_at__gte: params.data.created_at__gte,
+          created_at__lt: params.data.created_at__lt,
+        }
+
+        if ('checked__exact' in params.data) {
+          Object.assign(query, {
+            checked: params.data.checked__exact === 1 ? 'true' : 'false',
+          })
+        }
+
+        router.push(Object.assign({}, url, { query }))
       }
     }
 
@@ -79,10 +91,11 @@ export default {
     return {
       title,
       titleIcon,
+      searchText,
       breadcrumbs,
       url,
       goTo,
-
+      search,
     }
   },
 }

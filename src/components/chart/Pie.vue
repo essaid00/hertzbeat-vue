@@ -8,42 +8,22 @@
           </div>
 
           <div class="col-auto">
-            <q-btn
-              size="lg"
-              padding="xs md"
-              :disable="data.total <= 0"
-              :color="critical ? 'negative' : 'info'"
-              :text-color="critical ? 'white' : 'black'"
-              :label="data.total"
-              @click="goTo"
-            />
+            <q-btn size="lg" padding="xs md" :disable="data.total <= 0" :color="critical ? 'negative' : 'info'"
+              :text-color="critical ? 'white' : 'black'" :label="data.total" @click="goTo" />
           </div>
         </div>
       </q-card-section>
 
       <q-card-section class="echart-container q-pa-none">
-        <v-chart
-          v-show="isChartVisible"
-          ref="chart"
-          :init-options="initOptions"
-          :option="options"
-          :loading="loading"
-          :loading-options="loadingOptions"
-          autoresize
-          @click="passData"
-        />
+        <v-chart v-show="isChartVisible" ref="chart" :init-options="initOptions" :option="options" :loading="loading"
+          :loading-options="loadingOptions" autoresize @click="passData" />
         <q-banner v-if="noData" rounded class="bg-warning text-black q-ma-md">
           <translate>No data available.</translate>
         </q-banner>
       </q-card-section>
 
       <q-card-actions v-show="isChartVisible" align="around" class="q-pt-none">
-        <q-btn
-          icon="mdi-database-search"
-          flat
-          color="primary"
-          @click="dataView"
-        >
+        <q-btn icon="mdi-database-search" flat color="primary" @click="dataView">
           <q-tooltip>{{ $gettext('Data View') }}</q-tooltip>
         </q-btn>
 
@@ -57,56 +37,27 @@
       <q-card flat>
         <q-card-section>
           <div class="text-h5">
-            <q-icon
-              name="mdi-database-search"
-              size="lg"
-              class="vertical-middle"
-            />
+            <q-icon name="mdi-database-search" size="lg" class="vertical-middle" />
             <translate class="vertical-middle">Data</translate>
           </div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          <q-table
-            v-for="(serie, index) in dataGrid"
-            :key="index"
-            class="q-ma-md"
-            :title="serie.title"
-            :rows="serie.itemData"
-            :columns="columns"
-            :pagination="{ rowsPerPage: 0 }"
-            row-key="name"
-            hide-header
-            hide-pagination
-            flat
-            bordered
-            @row-click="rowClick"
-          >
+          <q-table v-for="(serie, index) in dataGrid" :key="index" class="q-ma-md" :title="serie.title"
+            :rows="serie.itemData" :columns="columns" :pagination="{ rowsPerPage: 0 }" row-key="name" hide-header
+            hide-pagination flat bordered @row-click="rowClick">
             <template #top-right>
-              <q-btn
-                flat
-                :icon="appIcon('export')"
-                color="primary"
-                @click.stop="exportTable(serie)"
-                ><q-tooltip>{{ $gettext('Export') }}</q-tooltip></q-btn
-              >
+              <q-btn flat :icon="appIcon('export')" color="primary" @click.stop="exportTable(serie)"><q-tooltip>{{
+                $gettext('Export') }}</q-tooltip></q-btn>
             </template>
           </q-table>
-          <q-banner
-            v-if="options.series.length === 0"
-            class="text-white bg-info q-ma-md"
-          >
+          <q-banner v-if="options.series.length === 0" class="text-white bg-info q-ma-md">
             <translate>No information</translate>
           </q-banner>
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn
-            v-close-popup
-            flat
-            :label="$gettext('Close')"
-            color="primary"
-          />
+          <q-btn v-close-popup flat :label="$gettext('Close')" color="primary" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -297,13 +248,13 @@ export default {
       await api
         .get(props.endPoint)
         .then((response) => {
-          if ('inner' in response.data) {
+          if ('inner' in response.data.data) {
             options.series = nestedSeries
           } else {
             options.series = normalSeries
           }
 
-          Object.assign(data, response.data)
+          Object.assign(data, response.data.data)
 
           if ('inner' in data) {
             options.series[0].data = data.inner
@@ -500,6 +451,7 @@ export default {
   width: 100%;
   height: 400px;
 }
+
 .echarts {
   width: 100%;
   height: 100%;
