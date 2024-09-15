@@ -78,6 +78,8 @@ export default defineComponent({
         .catch((error) => {
           console.log('it error')
           $q.localStorage.remove('auth.token')
+          $q.localStorage.remove('auth.user')
+          $q.localStorage.remove('auth.loggedIn')
           if (
             typeof error !== undefined &&
             typeof error.response !== undefined &&
