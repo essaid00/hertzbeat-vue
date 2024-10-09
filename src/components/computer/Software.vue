@@ -4,10 +4,7 @@
       <div v-translate class="text-h5 q-pb-md">Software</div>
 
       <q-list bordered>
-        <q-expansion-item
-          :content-inset-level="0.5"
-          @show="loadSoftwareInventory"
-        >
+        <q-expansion-item :content-inset-level="0.5" @show="loadSoftwareInventory">
           <template #header>
             <q-item-section avatar>
               <q-icon name="mdi-package-variant" size="md" />
@@ -19,37 +16,24 @@
 
             <q-item-section v-if="softwareInventory.length > 0">
               <q-chip>
-                <q-avatar color="info" text-color="black"
-                  ><strong>{{
-                    abbreviateNumber(softwareInventory.length, 0)
-                  }}</strong>
+                <q-avatar color="info" text-color="black"><strong>{{
+                  abbreviateNumber(softwareInventory.length, 0)
+                    }}</strong>
                   <q-tooltip>{{
                     softwareInventory.length
-                  }}</q-tooltip></q-avatar
-                >
+                    }}</q-tooltip></q-avatar>
                 <translate>packages</translate>
               </q-chip>
             </q-item-section>
 
             <q-item-section side>
               <div class="row items-center">
-                <q-btn
-                  flat
-                  icon="mdi-content-copy"
-                  color="primary"
-                  @click.stop="copyInventory"
-                  ><q-tooltip>{{ $gettext('Copy') }}</q-tooltip></q-btn
-                >
+                <q-btn flat icon="mdi-content-copy" color="primary" @click.stop="copyInventory"><q-tooltip>{{
+                    $gettext('Copy') }}</q-tooltip></q-btn>
 
-                <q-btn
-                  v-if="isSuperUser"
-                  flat
-                  icon="mdi-delete"
-                  :color="$q.dark.isActive ? 'white' : 'negative'"
+                <q-btn v-if="isSuperUser" flat icon="mdi-delete" :color="$q.dark.isActive ? 'white' : 'negative'"
                   :class="{ 'reversed-delete': $q.dark.isActive }"
-                  @click.stop="confirmRemoveInventory = true"
-                  ><q-tooltip>{{ $gettext('Delete') }}</q-tooltip></q-btn
-                >
+                  @click.stop="confirmRemoveInventory = true"><q-tooltip>{{ $gettext('Delete') }}</q-tooltip></q-btn>
               </div>
             </q-item-section>
           </template>
@@ -59,18 +43,10 @@
               <q-spinner-dots color="primary" size="3em" />
             </q-item>
 
-            <q-virtual-scroll
-              class="overflow"
-              :items-size="softwareInventory.length"
-              :items="softwareInventory"
-            >
+            <q-virtual-scroll class="overflow" :items-size="softwareInventory.length" :items="softwareInventory">
               <template #default="{ item }">
                 <q-item>
-                  <MigasLink
-                    model="packages"
-                    :pk="item.id"
-                    :value="item.name"
-                  />
+                  <MigasLink model="packages" :pk="item.id" :value="item.name" />
                 </q-item>
               </template>
             </q-virtual-scroll>
@@ -79,10 +55,7 @@
 
         <q-separator />
 
-        <q-expansion-item
-          :content-inset-level="0.5"
-          @show="loadSoftwareHistory"
-        >
+        <q-expansion-item :content-inset-level="0.5" @show="loadSoftwareHistory">
           <template #header>
             <q-item-section avatar>
               <q-icon name="mdi-history" size="md" />
@@ -94,41 +67,23 @@
 
             <q-item-section v-if="Object.keys(softwareHistory).length > 0">
               <q-chip>
-                <q-avatar color="info" text-color="black"
-                  ><strong>{{
-                    abbreviateNumber(Object.keys(softwareHistory).length, 0)
-                  }}</strong
-                  ><q-tooltip>{{
-                    Object.keys(softwareHistory).length
-                  }}</q-tooltip></q-avatar
-                >
-                <translate
-                  :translate-n="Object.keys(softwareHistory).length"
-                  translate-plural="dates"
-                  >date</translate
-                >
+                <q-avatar color="info" text-color="black"><strong>{{
+                  abbreviateNumber(Object.keys(softwareHistory).length, 0)
+                    }}</strong><q-tooltip>{{
+                      Object.keys(softwareHistory).length
+                    }}</q-tooltip></q-avatar>
+                <translate :translate-n="Object.keys(softwareHistory).length" translate-plural="dates">date</translate>
               </q-chip>
             </q-item-section>
 
             <q-item-section side>
               <div class="row items-center">
-                <q-btn
-                  flat
-                  icon="mdi-content-copy"
-                  color="primary"
-                  @click.stop="copyHistory"
-                  ><q-tooltip>{{ $gettext('Copy') }}</q-tooltip></q-btn
-                >
+                <q-btn flat icon="mdi-content-copy" color="primary" @click.stop="copyHistory"><q-tooltip>{{
+                    $gettext('Copy') }}</q-tooltip></q-btn>
 
-                <q-btn
-                  v-if="isSuperUser"
-                  flat
-                  icon="mdi-delete"
-                  :color="$q.dark.isActive ? 'white' : 'negative'"
+                <q-btn v-if="isSuperUser" flat icon="mdi-delete" :color="$q.dark.isActive ? 'white' : 'negative'"
                   :class="{ 'reversed-delete': $q.dark.isActive }"
-                  @click.stop="confirmRemoveHistory = true"
-                  ><q-tooltip>{{ $gettext('Delete') }}</q-tooltip></q-btn
-                >
+                  @click.stop="confirmRemoveHistory = true"><q-tooltip>{{ $gettext('Delete') }}</q-tooltip></q-btn>
               </div>
             </q-item-section>
           </template>
@@ -137,11 +92,7 @@
             <q-item v-if="loading.history" class="justify-center">
               <q-spinner-dots color="primary" size="3em" />
             </q-item>
-            <q-expansion-item
-              v-for="(value, key) in softwareHistory"
-              :key="key"
-              expand-separator
-            >
+            <q-expansion-item v-for="(value, key) in softwareHistory" :key="key" expand-separator>
               <template #header>
                 <q-item-section avatar>
                   <q-avatar icon="mdi-calendar-range" />
@@ -153,74 +104,42 @@
 
                 <q-item-section side>
                   <div class="row items-center">
-                    <q-chip
-                      v-if="value.filter((item) => item.mode === '+').length"
-                      color="positive"
-                      text-color="white"
-                      ><strong>{{
+                    <q-chip v-if="value.filter((item) => item.mode === '+').length" color="positive"
+                      text-color="white"><strong>{{
                         value.filter((item) => item.mode === '+').length
-                      }}</strong
-                      ><q-tooltip
-                        ><translate>Installed Packages</translate></q-tooltip
-                      ></q-chip
-                    >
+                        }}</strong><q-tooltip>
+                        <translate>Installed Packages</translate>
+                      </q-tooltip></q-chip>
 
-                    <q-chip
-                      v-if="value.filter((item) => item.mode === '-').length"
-                      color="negative"
-                      text-color="white"
-                      ><strong>{{
+                    <q-chip v-if="value.filter((item) => item.mode === '-').length" color="negative"
+                      text-color="white"><strong>{{
                         value.filter((item) => item.mode === '-').length
-                      }}</strong
-                      ><q-tooltip
-                        ><translate>Uninstalled Packages</translate></q-tooltip
-                      ></q-chip
-                    >
+                        }}</strong><q-tooltip>
+                        <translate>Uninstalled Packages</translate>
+                      </q-tooltip></q-chip>
 
-                    <q-btn
-                      v-if="isSuperUser"
-                      flat
-                      icon="mdi-delete"
-                      :color="$q.dark.isActive ? 'white' : 'negative'"
-                      :class="{ 'reversed-delete': $q.dark.isActive }"
-                      @click.stop="deleteHistory(key)"
-                      ><q-tooltip>{{ $gettext('Delete') }}</q-tooltip></q-btn
-                    >
+                    <q-btn v-if="isSuperUser" flat icon="mdi-delete" :color="$q.dark.isActive ? 'white' : 'negative'"
+                      :class="{ 'reversed-delete': $q.dark.isActive }" @click.stop="deleteHistory(key)"><q-tooltip>{{
+                        $gettext('Delete') }}</q-tooltip></q-btn>
                   </div>
                 </q-item-section>
               </template>
               <q-card>
                 <q-card-section>
                   <q-list>
-                    <q-virtual-scroll
-                      class="overflow"
-                      :items-size="value.length"
-                      :items="value"
-                    >
+                    <q-virtual-scroll class="overflow" :items-size="value.length" :items="value">
                       <template #default="{ item }">
                         <q-item>
                           <q-item-section avatar>
-                            <q-avatar
-                              size="md"
-                              outline
-                              :color="
-                                item.mode === '+' ? 'positive' : 'negative'
-                              "
-                              text-color="white"
-                              :icon="
-                                item.mode === '+'
+                            <q-avatar size="md" outline :color="item.mode === '+' ? 'positive' : 'negative'
+                              " text-color="white" :icon="item.mode === '+'
                                   ? 'mdi-plus-thick'
                                   : 'mdi-minus-thick'
-                              "
-                            />
+                                " />
                           </q-item-section>
 
                           <q-item-section side>
-                            <MigasLink
-                              model="packages"
-                              :pk="item.id"
-                              :value="item.name"
-                            />
+                            <MigasLink model="packages" :pk="item.id" :value="item.name" />
                           </q-item-section>
                         </q-item>
                       </template>
@@ -235,14 +154,8 @@
     </q-card-section>
 
     <q-card-actions class="justify-around">
-      <q-btn
-        :icon="appIcon('compare')"
-        color="info"
-        text-color="black"
-        no-caps
-        :label="`${$gettext('Compare')}...`"
-        @click="showingCompare = true"
-      />
+      <q-btn :icon="appIcon('compare')" color="info" text-color="black" no-caps :label="`${$gettext('Compare')}...`"
+        @click="showingCompare = true" />
     </q-card-actions>
   </q-card>
 
@@ -253,23 +166,11 @@
       </q-card-section>
 
       <q-card-section class="row items-center">
-        <q-select
-          v-model="target"
-          autofocus
-          outlined
-          use-input
-          map-options
-          input-debounce="0"
-          :label="$gettext('Computer')"
-          :hint="
-            $gettext('Type to search (minimum %{num} characters)', {
-              num: MIN_CHARS_SEARCH,
-            })
-          "
-          :options="computers"
-          @filter="filterComputers"
-          @filter-abort="abortFilterComputers"
-        >
+        <q-select v-model="target" autofocus outlined use-input map-options input-debounce="0"
+          :label="$gettext('Computer')" :hint="$gettext('Type to search (minimum %{num} characters)', {
+            num: MIN_CHARS_SEARCH,
+          })
+            " :options="computers" @filter="filterComputers" @filter-abort="abortFilterComputers">
           <template #no-option>
             <q-item>
               <q-item-section v-translate class="text-grey">
@@ -285,57 +186,30 @@
           </template>
 
           <template #selected-item="scope">
-            <q-chip
-              removable
-              dense
-              :tabindex="scope.tabindex"
-              class="q-ma-md"
-              @remove="scope.removeAtIndex(scope.index)"
-            >
-              <MigasLink
-                model="computers"
-                :pk="scope.opt.id"
-                :value="scope.opt.__str__ || ''"
-                :icon="elementIcon(scope.opt.status)"
-                :tooltip="scope.opt.summary"
-              />
+            <q-chip removable dense :tabindex="scope.tabindex" class="q-ma-md"
+              @remove="scope.removeAtIndex(scope.index)">
+              <MigasLink model="computers" :pk="scope.opt.id" :value="scope.opt.__str__ || ''"
+                :icon="elementIcon(scope.opt.status)" :tooltip="scope.opt.summary" />
             </q-chip>
           </template>
         </q-select>
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn
-          v-close-popup
-          flat
-          color="primary"
-          :label="$gettext('Cancel')"
-          @click="showingCompare = !showingCompare"
-        />
+        <q-btn v-close-popup flat color="primary" :label="$gettext('Cancel')"
+          @click="showingCompare = !showingCompare" />
 
-        <q-btn
-          v-close-popup
-          :icon="appIcon('compare')"
-          color="primary"
-          :disabled="!isCompareEnabled"
-          :label="$gettext('Compare')"
-          @click="compare"
-        />
+        <q-btn v-close-popup :icon="appIcon('compare')" color="primary" :disabled="!isCompareEnabled"
+          :label="$gettext('Compare')" @click="compare" />
       </q-card-actions>
     </q-card>
   </q-dialog>
 
-  <RemoveDialog
-    v-model="confirmRemoveInventory"
-    @confirmed="deleteInventory"
-    @canceled="confirmRemoveInventory = !confirmRemoveInventory"
-  />
+  <RemoveDialog v-model="confirmRemoveInventory" @confirmed="deleteInventory"
+    @canceled="confirmRemoveInventory = !confirmRemoveInventory" />
 
-  <RemoveDialog
-    v-model="confirmRemoveHistory"
-    @confirmed="deleteHistory"
-    @canceled="confirmRemoveHistory = !confirmRemoveHistory"
-  />
+  <RemoveDialog v-model="confirmRemoveHistory" @confirmed="deleteHistory"
+    @canceled="confirmRemoveHistory = !confirmRemoveHistory" />
 </template>
 
 <script>
@@ -474,7 +348,7 @@ export default {
           computers.value = response.data.results
         })
 
-      update(() => {})
+      update(() => { })
     }
 
     const abortFilterComputers = () => {

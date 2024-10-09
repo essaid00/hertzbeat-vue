@@ -183,11 +183,11 @@ export default {
     }
 
     const updatePreferences = async (data) => {
-      console.log('updatePreferences')
+      //console.log('updatePreferences')
       await api
         .get(`/account/auth/me`, data)
         .then((response) => {
-          uiStore.notifySuccess($gettext('Preferences changed!'))
+          // uiStore.notifySuccess($gettext('Preferences changed!'))
 
           authStore.setUser(response.data.data)
           userAccount.value.hide()
@@ -210,7 +210,7 @@ export default {
     })
 
     onMounted(async () => {
-      console.log('onMounted')
+      //  console.log('onMounted')
       await updatePreferences({
         scope_preference: scopePreference.value.id
           ? scopePreference.value.id

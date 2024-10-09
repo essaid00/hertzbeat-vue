@@ -7,7 +7,7 @@ const { getScrollTarget, setVerticalScrollPosition } = scroll
 export const useUiStore = defineStore('ui', () => {
   const isLoading = ref(false)
   const currentPageTable = ref(1)
-  const server = ref(process.env.MIGASFREE_SERVER || 'http://localhost')
+  const server = ref(process.env.HertzBeat_SERVER || 'http://localhost')
 
   function scrollToElement(element) {
     const target = getScrollTarget(element)

@@ -113,7 +113,7 @@ export default defineComponent({
       connect();
     })
     useMeta({
-      titleTemplate: (title) => `${title} | Migasfree`,
+      titleTemplate: (title) => `${title} | HertzBeat`,
     })
 
     const hasDomainOrScopePreference = computed(() => {
@@ -157,7 +157,7 @@ export default defineComponent({
     watch(organization, (newVal) => {
       if (newVal !== undefined)
         useMeta({
-          titleTemplate: (title) => `${title} | Migasfree @ ${newVal}`,
+          titleTemplate: (title) => `${title} | HertzBeat @ ${newVal}`,
         })
     })
 

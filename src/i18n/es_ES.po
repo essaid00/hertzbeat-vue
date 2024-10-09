@@ -926,8 +926,8 @@ msgstr "Fecha"
 #: src/components/computer/Info.vue:68
 #: src/pages/computers/results/events.vue:18
 #: src/pages/computers/results/events.vue:21
-msgid "Date of entry into the migasfree system"
-msgstr "Fecha de entrada en el sistema migasfree"
+msgid "Date of entry into the HertzBeat system"
+msgstr "Fecha de entrada en el sistema HertzBeat"
 
 #: src/composables/date.js:60
 msgid "days"
@@ -1853,8 +1853,8 @@ msgid "Messages List"
 msgstr "Lista de Mensajes"
 
 #: src/components/ui/AppFooter.vue:73
-msgid "migasfree documentation"
-msgstr "documentación de migasfree"
+msgid "HertzBeat documentation"
+msgstr "documentación de HertzBeat"
 
 #: src/components/ui/AppMenu.vue:270 src/pages/computers/results/events.vue:107
 #: src/pages/computers/results/events.vue:484 src/pages/migrations/index.vue:60

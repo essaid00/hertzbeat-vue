@@ -30,8 +30,8 @@ export default {
     const MennuStore = useMennuStore();
     onMounted(async () => {
       await MennuStore.loadMennu()
-      console.log('MennuStore.mennu')
-      console.log(MennuStore.mennu)
+      // console.log('MennuStore.mennu')
+      //console.log(MennuStore.mennu)
       items.value = MennuStore.mennu
     })
 

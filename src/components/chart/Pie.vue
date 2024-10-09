@@ -48,7 +48,7 @@
             hide-pagination flat bordered @row-click="rowClick">
             <template #top-right>
               <q-btn flat :icon="appIcon('export')" color="primary" @click.stop="exportTable(serie)"><q-tooltip>{{
-                $gettext('Export') }}</q-tooltip></q-btn>
+              $gettext('Export') }}</q-tooltip></q-btn>
             </template>
           </q-table>
           <q-banner v-if="options.series.length === 0" class="text-white bg-info q-ma-md">
@@ -88,8 +88,8 @@ import { PieChart } from 'echarts/charts'
 import { TooltipComponent, TitleComponent } from 'echarts/components'
 import { SVGRenderer } from 'echarts/renderers'
 import {
-  MIGASFREE_CHART_COLORS,
-  MIGASFREE_CHART_DARK_COLORS,
+  HertzBeat_CHART_COLORS,
+  HertzBeat_CHART_DARK_COLORS,
 } from 'config/app.conf'
 
 echarts.use([PieChart, TooltipComponent, TitleComponent, SVGRenderer])
@@ -139,8 +139,8 @@ export default {
         formatter: '{b} ({c}): <strong>{d}%</strong>',
       },
       color: $q.dark.isActive
-        ? MIGASFREE_CHART_DARK_COLORS
-        : MIGASFREE_CHART_COLORS,
+        ? HertzBeat_CHART_DARK_COLORS
+        : HertzBeat_CHART_COLORS,
       series: [],
       title: {
         text: props.title,
@@ -406,8 +406,8 @@ export default {
       () => $q.dark.isActive,
       (val) => {
         options.color = val
-          ? MIGASFREE_CHART_DARK_COLORS
-          : MIGASFREE_CHART_COLORS
+          ? HertzBeat_CHART_DARK_COLORS
+          : HertzBeat_CHART_COLORS
 
         if ('series' in options) {
           options.series.map((item) => {

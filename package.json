@@ -1,17 +1,17 @@
 {
-  "name": "migasfree-frontend",
+  "name": "HertzBeat-frontend",
   "version": "5.0",
   "description": "Systems Management System (frontend) (with Quasar framework)",
-  "productName": "Migasfree Frontend",
+  "productName": "HertzBeat Frontend",
   "author": "Jose Antonio Chavarría <jachavar@gmail.com>",
   "license": "GPLv3",
-  "homepage": "https://github.com/migasfree/migasfree-frontend",
+  "homepage": "https://github.com/HertzBeat/HertzBeat-frontend",
   "repository": {
     "type": "git",
-    "url": "https://github.com/migasfree/migasfree-frontend.git"
+    "url": "https://github.com/HertzBeat/HertzBeat-frontend.git"
   },
   "bugs": {
-    "url": "https://github.com/migasfree/migasfree-frontend/issues"
+    "url": "https://github.com/HertzBeat/HertzBeat-frontend/issues"
   },
   "private": true,
   "scripts": {

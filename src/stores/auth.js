@@ -47,23 +47,23 @@ export const useAuthStore = defineStore('auth', () => {
       .post('/account/auth/login', data)
       .then((response) => {
         console.log('response')
-        console.log('response'+response.data.data.token)
+        console.log('response' + response.data.data.token)
         console.log(response)
         setToken(response.data.data.accessToken)
-       // getUser()
-       console.log('response')
+        // getUser()
+        console.log('response')
         if (token.value) {
           console.log('response')
           setLoggedIn(true)
-        //  getServerInfo()
-        //  loadDomains()
-         // loadScopes()
+          //  getServerInfo()
+          //  loadDomains()
+          // loadScopes()
         }
       })
       .catch((error) => {
         console.log('errerr')
-        console.log(error.response.data.msg        )
-        uiStore.notifyError(error.response.data.msg )
+        console.log(error.response.data.msg)
+        uiStore.notifyError(error.response.data.msg)
       })
   }
 
@@ -102,7 +102,7 @@ export const useAuthStore = defineStore('auth', () => {
     const uiStore = useUiStore()
 
     await api
-      .post('/rest-auth/logout/')
+      .post('/account/auth/logout')
       .then((response) => {
         reset()
       })
@@ -190,7 +190,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   function setUser(value) {
-    console.log(value)
+    //console.log(value)
     user.value = value
     LocalStorage.set('auth.user', user.value)
   }

@@ -7,84 +7,36 @@
 
       <slot name="selector"></slot>
 
-      <q-card-section
-        v-if="monthSelector || daySelector"
-        class="row justify-center q-py-none"
-      >
-        <MonthInput
-          v-if="monthSelector"
-          v-model="begin"
-          class="q-ma-sm"
-          :label="$gettext('Initial Month')"
-        />
+      <q-card-section v-if="monthSelector || daySelector" class="row justify-center q-py-none">
+        <MonthInput v-if="monthSelector" v-model="begin" class="q-ma-sm" :label="$gettext('Initial Month')" />
 
-        <MonthInput
-          v-if="monthSelector"
-          v-model="end"
-          class="q-ma-sm"
-          :label="$gettext('Final Month')"
-        />
+        <MonthInput v-if="monthSelector" v-model="end" class="q-ma-sm" :label="$gettext('Final Month')" />
 
-        <DayInput
-          v-if="daySelector"
-          v-model="begin"
-          class="q-ma-sm"
-          :label="$gettext('Initial Day')"
-        />
+        <DayInput v-if="daySelector" v-model="begin" class="q-ma-sm" :label="$gettext('Initial Day')" />
 
-        <DayInput
-          v-if="daySelector"
-          v-model="end"
-          class="q-ma-sm"
-          :label="$gettext('Final Day')"
-        />
+        <DayInput v-if="daySelector" v-model="end" class="q-ma-sm" :label="$gettext('Final Day')" />
 
-        <q-btn
-          icon="mdi-refresh"
-          class="q-ma-sm"
-          :disabled="loading"
-          :loading="loading"
-          :label="$gettext('Update')"
-          @click="loadData"
-        />
+        <q-btn icon="mdi-refresh" class="q-ma-sm" :disabled="loading" :loading="loading" :label="$gettext('Update')"
+          @click="loadData" />
       </q-card-section>
 
       <q-card-section class="echart-container q-py-none">
-        <v-chart
-          v-show="isChartVisible"
-          ref="chart"
-          :init-options="initOptions"
-          :option="options"
-          :loading="loading"
-          :loading-options="loadingOptions"
-          autoresize
-          @click="passData"
-        />
+        <v-chart v-show="isChartVisible" ref="chart" :init-options="initOptions" :option="options" :loading="loading"
+          :loading-options="loadingOptions" autoresize @click="passData" />
         <q-banner v-if="noData" rounded class="bg-warning text-black q-ma-md">
           <translate>No data available.</translate>
         </q-banner>
       </q-card-section>
 
       <q-card-actions v-show="isChartVisible" align="around" class="q-pt-sm">
-        <q-btn
-          icon="mdi-database-search"
-          flat
-          color="primary"
-          @click="dataView"
-        >
+        <q-btn icon="mdi-database-search" flat color="primary" @click="dataView">
           <q-tooltip>{{ $gettext('Data View') }}</q-tooltip>
         </q-btn>
 
-        <q-btn-toggle
-          v-if="isSelectedModeVisible"
-          v-model="selectedMode"
-          flat
-          :options="[
-            { slot: 'multiple', value: 'multiple' },
-            { slot: 'single', value: 'single' },
-          ]"
-          @update:model-value="updateSelectedMode"
-        >
+        <q-btn-toggle v-if="isSelectedModeVisible" v-model="selectedMode" flat :options="[
+      { slot: 'multiple', value: 'multiple' },
+      { slot: 'single', value: 'single' },
+    ]" @update:model-value="updateSelectedMode">
           <template #multiple>
             <q-icon name="mdi-image-multiple" />
             <q-tooltip>{{ $gettext('Multiple Selection') }}</q-tooltip>
@@ -106,53 +58,33 @@
       <q-card flat>
         <q-card-section>
           <div class="text-h5">
-            <q-icon
-              name="mdi-database-search"
-              size="lg"
-              class="vertical-middle"
-            />
+            <q-icon name="mdi-database-search" size="lg" class="vertical-middle" />
             <translate class="vertical-middle">Data</translate>
           </div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          <q-table
-            v-if="isChartVisible"
-            class="q-ma-md"
-            :pagination="{ rowsPerPage: 0 }"
-            :rows="data.series"
-            hide-pagination
-            flat
-            bordered
-          >
+          <q-table v-if="isChartVisible" class="q-ma-md" :pagination="{ rowsPerPage: 0 }" :rows="data.series"
+            hide-pagination flat bordered>
             <template #top-left>
-              <q-btn
-                flat
-                :icon="appIcon('export')"
-                color="primary"
-                @click.stop="exportTable"
-                ><q-tooltip>{{ $gettext('Export') }}</q-tooltip></q-btn
-              >
+              <q-btn flat :icon="appIcon('export')" color="primary" @click.stop="exportTable"><q-tooltip>{{
+      $gettext('Export') }}</q-tooltip></q-btn>
             </template>
 
             <template #header>
               <q-tr>
                 <q-th></q-th>
                 <q-th v-for="(item, index) in data.xData" :key="index">{{
-                  item
-                }}</q-th>
+      item
+    }}</q-th>
               </q-tr>
             </template>
 
             <template #body="props">
               <q-tr :props="props">
                 <q-th>{{ props.row.name }}</q-th>
-                <q-td
-                  v-for="(item, index) in props.row.data"
-                  :key="index"
-                  class="cursor-pointer"
-                  @click="selectCell(props.row.data[index])"
-                >
+                <q-td v-for="(item, index) in props.row.data" :key="index" class="cursor-pointer"
+                  @click="selectCell(props.row.data[index])">
                   {{ item.value }}
                 </q-td>
               </q-tr>
@@ -161,12 +93,7 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn
-            v-close-popup
-            flat
-            :label="$gettext('Close')"
-            color="primary"
-          />
+          <q-btn v-close-popup flat :label="$gettext('Close')" color="primary" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -207,8 +134,8 @@ import {
 } from 'echarts/components'
 import { SVGRenderer } from 'echarts/renderers'
 import {
-  MIGASFREE_CHART_COLORS,
-  MIGASFREE_CHART_DARK_COLORS,
+  HertzBeat_CHART_COLORS,
+  HertzBeat_CHART_DARK_COLORS,
 } from 'config/app.conf'
 
 echarts.use([
@@ -280,8 +207,8 @@ export default {
     const options = reactive({
       animation: false,
       color: $q.dark.isActive
-        ? MIGASFREE_CHART_DARK_COLORS
-        : MIGASFREE_CHART_COLORS,
+        ? HertzBeat_CHART_DARK_COLORS
+        : HertzBeat_CHART_COLORS,
       textStyle: {
         fontFamily: 'Dosis',
         fontSize: 14,
@@ -510,8 +437,8 @@ export default {
       () => $q.dark.isActive,
       (val) => {
         options.color = val
-          ? MIGASFREE_CHART_DARK_COLORS
-          : MIGASFREE_CHART_COLORS
+          ? HertzBeat_CHART_DARK_COLORS
+          : HertzBeat_CHART_COLORS
         options.legend.textStyle.color = val ? '#fff' : '#333'
         options.legend.pageTextStyle.color = val ? '#fff' : '#333'
         options.legend.pageIconColor = val ? '#fff' : '#2f4554'
@@ -558,6 +485,7 @@ export default {
   width: 100%;
   height: 400px;
 }
+
 .echarts {
   width: 100%;
   height: 100%;

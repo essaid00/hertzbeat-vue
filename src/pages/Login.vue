@@ -10,7 +10,7 @@
       <q-card-section>
         <div class="text-center q-pt-lg">
           <div class="col text-h6 ellipsis">
-            <translate>Log in</translate> @ migasfree
+            <translate>Log in</translate> @ HertzBeat
           </div>
         </div>
       </q-card-section>

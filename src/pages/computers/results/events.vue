@@ -4,23 +4,12 @@
 
     <template v-if="computer.id">
       <Header :title="title" :icon="titleIcon" :has-export-button="false">
-        <template v-if="computer.id" #append
-          ><span class="vertical-middle">: </span>
-          <MigasLink
-            model="computers"
-            :pk="computer.id"
-            :value="computer.__str__ || ''"
-            :icon="elementIcon(computer.status)"
-            :tooltip="computer.summary"
-          />
+        <template v-if="computer.id" #append><span class="vertical-middle">: </span>
+          <MigasLink model="computers" :pk="computer.id" :value="computer.__str__ || ''"
+            :icon="elementIcon(computer.status)" :tooltip="computer.summary" />
           <span class="text-h6 float-right">
-            <DateView
-              :value="computer.created_at"
-              icon="mdi-calendar-plus"
-              :tooltip-text="
-                $gettext('Date of entry into the migasfree system')
-              "
-            />
+            <DateView :value="computer.created_at" icon="mdi-calendar-plus" :tooltip-text="$gettext('Date of entry into the HertzBeat system')
+      " />
           </span>
         </template>
       </Header>
@@ -32,83 +21,61 @@
       <template v-else>
         <div class="row q-py-md">
           <div class="col">
-            <q-btn-toggle
-              v-model="event"
-              spread
-              no-caps
-              toggle-color="primary"
-              :options="[
-                { slot: 'syncs', value: 'syncs' },
-                { slot: 'errors', value: 'errors' },
-                { slot: 'faults', value: 'faults' },
-                { slot: 'statusLogs', value: 'statusLogs' },
-                { slot: 'migrations', value: 'migrations' },
-              ]"
-              @update:model-value="updateEvent"
-            >
+            <q-btn-toggle v-model="event" spread no-caps toggle-color="primary" :options="[
+      { slot: 'syncs', value: 'syncs' },
+      { slot: 'errors', value: 'errors' },
+      { slot: 'faults', value: 'faults' },
+      { slot: 'statusLogs', value: 'statusLogs' },
+      { slot: 'migrations', value: 'migrations' },
+    ]" @update:model-value="updateEvent">
               <template #syncs>
-                <q-icon
-                  :name="modelIcon('syncs')"
-                  class="vertical-middle q-mr-sm"
-                />
+                <q-icon :name="modelIcon('syncs')" class="vertical-middle q-mr-sm" />
                 <span class="vertical-middle">
-                  <translate>Synchronizations</translate></span
-                >
+                  <translate>Synchronizations</translate>
+                </span>
                 <q-chip color="grey" text-color="white">{{
-                  events.syncs.total
-                }}</q-chip>
+      events.syncs.total
+    }}</q-chip>
               </template>
 
               <template #errors>
-                <q-icon
-                  :name="modelIcon('errors')"
-                  class="vertical-middle q-mr-sm"
-                />
+                <q-icon :name="modelIcon('errors')" class="vertical-middle q-mr-sm" />
                 <span class="vertical-middle">
-                  <translate>Errors</translate></span
-                >
+                  <translate>Errors</translate>
+                </span>
                 <q-chip color="grey" text-color="white">{{
-                  events.errors.total
-                }}</q-chip>
+      events.errors.total
+    }}</q-chip>
               </template>
 
               <template #faults>
-                <q-icon
-                  :name="modelIcon('faults')"
-                  class="vertical-middle q-mr-sm"
-                />
+                <q-icon :name="modelIcon('faults')" class="vertical-middle q-mr-sm" />
                 <span class="vertical-middle">
-                  <translate>Faults</translate></span
-                >
+                  <translate>Faults</translate>
+                </span>
                 <q-chip color="grey" text-color="white">{{
-                  events.faults.total
-                }}</q-chip>
+      events.faults.total
+    }}</q-chip>
               </template>
 
               <template #statusLogs>
-                <q-icon
-                  :name="modelIcon('status-logs')"
-                  class="vertical-middle q-mr-sm"
-                />
+                <q-icon :name="modelIcon('status-logs')" class="vertical-middle q-mr-sm" />
                 <span class="vertical-middle">
-                  <translate>Status Logs</translate></span
-                >
+                  <translate>Status Logs</translate>
+                </span>
                 <q-chip color="grey" text-color="white">{{
-                  events.statusLogs.total
-                }}</q-chip>
+      events.statusLogs.total
+    }}</q-chip>
               </template>
 
               <template #migrations>
-                <q-icon
-                  :name="modelIcon('migrations')"
-                  class="vertical-middle q-mr-sm"
-                />
+                <q-icon :name="modelIcon('migrations')" class="vertical-middle q-mr-sm" />
                 <span class="vertical-middle">
-                  <translate>Migrations</translate></span
-                >
+                  <translate>Migrations</translate>
+                </span>
                 <q-chip color="grey" text-color="white">{{
-                  events.migrations.total
-                }}</q-chip>
+      events.migrations.total
+    }}</q-chip>
               </template>
             </q-btn-toggle>
           </div>
@@ -116,40 +83,22 @@
 
         <div class="row">
           <div class="col-12">
-            <HeatMap
-              :title="current.title"
-              :data="current.data"
-              :total="current.total"
-              :start="showDate(computer.created_at, 'YYYY-MM-DD')"
-              @get-date="showItems"
-              @total="goToModel"
-            />
+            <HeatMap :title="current.title" :data="current.data" :total="current.total"
+              :start="showDate(computer.created_at, 'YYYY-MM-DD')" @get-date="showItems" @total="goToModel" />
           </div>
         </div>
       </template>
 
       <div v-if="items.length > 0" id="events" class="q-py-md">
-        <q-table
-          :title="`${events[event].title} (${itemsDate}: ${items.length})`"
-          :rows="items"
-          :columns="events[event].columns"
-          hide-pagination
-          :rows-per-page-options="[0]"
-          :visible-columns="events[event].visibleColumns"
-        >
+        <q-table :title="`${events[event].title} (${itemsDate}: ${items.length})`" :rows="items"
+          :columns="events[event].columns" hide-pagination :rows-per-page-options="[0]"
+          :visible-columns="events[event].visibleColumns">
           <template #top>
-            <span class="q-table__title">{{ events[event].title }}</span
-            ><q-space />
+            <span class="q-table__title">{{ events[event].title }}</span><q-space />
             <DateView :value="itemsDate" icon="mdi-calendar-star" />
             <q-space />
-            <q-btn
-              :label="items.length"
-              size="lg"
-              padding="xs md"
-              color="info"
-              text-color="black"
-              @click="goToItems(itemsDate)"
-            ></q-btn>
+            <q-btn :label="items.length" size="lg" padding="xs md" color="info" text-color="black"
+              @click="goToItems(itemsDate)"></q-btn>
           </template>
 
           <template #body="props">
@@ -160,33 +109,17 @@
 
               <q-td key="created_at">
                 <DateView :value="props.row.created_at" />
-                <DateDiff
-                  v-if="props.row.created_at && props.row.start_date"
-                  class="float-right"
-                  :begin="new Date(props.row.start_date)"
-                  :end="new Date(props.row.created_at)"
-                  :tooltip="$gettext('Duration')"
-                />
+                <DateDiff v-if="props.row.created_at && props.row.start_date" class="float-right"
+                  :begin="new Date(props.row.start_date)" :end="new Date(props.row.created_at)"
+                  :tooltip="$gettext('Duration')" />
               </q-td>
 
               <q-td v-if="event === 'syncs'" key="user.name">
-                <MigasLink
-                  model="users"
-                  :pk="props.row.user.id"
-                  :value="props.row.user.__str__"
-                />
+                <MigasLink model="users" :pk="props.row.user.id" :value="props.row.user.__str__" />
               </q-td>
 
-              <q-td
-                v-if="event !== 'statusLogs'"
-                key="project.name"
-                :props="props"
-              >
-                <MigasLink
-                  model="projects"
-                  :pk="props.row.project.id"
-                  :value="props.row.project.name || ''"
-                />
+              <q-td v-if="event !== 'statusLogs'" key="project.name" :props="props">
+                <MigasLink model="projects" :pk="props.row.project.id" :value="props.row.project.name || ''" />
               </q-td>
 
               <q-td v-if="event === 'syncs'" key="pms_status_ok">
@@ -206,11 +139,8 @@
               </q-td>
 
               <q-td v-if="event === 'faults'" key="fault_definition.name">
-                <MigasLink
-                  model="fault-definitions"
-                  :pk="props.row.fault_definition.id"
-                  :value="props.row.fault_definition.name || ''"
-                />
+                <MigasLink model="fault-definitions" :pk="props.row.fault_definition.id"
+                  :value="props.row.fault_definition.name || ''" />
               </q-td>
 
               <q-td v-if="event === 'faults'" key="result">
@@ -218,14 +148,10 @@
               </q-td>
 
               <q-td v-if="event === 'statusLogs'" key="status">
-                <q-icon
-                  :name="elementIcon(props.row.status)"
-                  class="vertical-middle q-mr-xs"
-                  size="sm"
-                />
+                <q-icon :name="elementIcon(props.row.status)" class="vertical-middle q-mr-xs" size="sm" />
                 <span class="vertical-middle">{{
-                  computerStatus(props.row.status)
-                }}</span>
+      computerStatus(props.row.status)
+                  }}</span>
               </q-td>
             </q-tr>
           </template>

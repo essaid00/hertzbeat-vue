@@ -999,7 +999,7 @@ msgstr ""
 #: src/components/computer/Info.vue:68
 #: src/pages/computers/results/events.vue:18
 #: src/pages/computers/results/events.vue:21
-msgid "Date of entry into the migasfree system"
+msgid "Date of entry into the HertzBeat system"
 msgstr ""
 
 #: src/composables/date.js:60
@@ -1966,7 +1966,7 @@ msgid "Messages List"
 msgstr ""
 
 #: src/components/ui/AppFooter.vue:73
-msgid "migasfree documentation"
+msgid "HertzBeat documentation"
 msgstr ""
 
 #: src/components/ui/AppMenu.vue:270

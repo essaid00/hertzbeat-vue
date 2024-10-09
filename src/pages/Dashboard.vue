@@ -7,11 +7,18 @@
         <PieChart :title="$gettext('Attributes / Formula')" end-point="/summary/v1" :url="url" @get-link="goTo" />
       </div>
       <div class="col">
-        <PieChart :title="$gettext('Attributes / Formula')" end-point="/summary/v1" :url="url" @get-link="goTo" />
+        <Carousel></Carousel>
       </div>
       <div class="col">
         <PieChart :title="$gettext('Attributes / Formula')" end-point="/summary/v1" :url="url" @get-link="goTo" />
       </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <list />
+      </div>
+
+
     </div>
   </q-page>
 </template>
@@ -19,20 +26,20 @@
 <script>
 import { ref, reactive } from 'vue'
 import { useGettext } from 'vue3-gettext'
+import Carousel from 'components/ui/carousel.vue'
 import { useMeta } from 'quasar'
 import { useRouter } from 'vue-router'
-
 import Breadcrumbs from 'components/ui/Breadcrumbs'
-import Header from 'components/ui/Header'
-import SearchFilter from 'components/ui/SearchFilter'
+import list from 'pages/heartz/list.vue'
 import PieChart from 'components/chart/Pie'
-
 import { appIcon, modelIcon } from 'composables/element'
 
 export default {
   components: {
     Breadcrumbs,
     PieChart,
+    list,
+    Carousel,
   },
   setup() {
     const router = useRouter()

@@ -1,12 +1,12 @@
-# migasfree-frontend
+# HertzBeat-frontend
 
-Migasfree is an application to manage systems. Fundamentally to deploy software to computers in an organization.
+HertzBeat is an application to manage systems. Fundamentally to deploy software to computers in an organization.
 
 This project is the frontend (with [Quasar framework](https://quasar.dev/)).
 
 ## License
 
-Migasfree is free software, released under [GNU GPL v3](https://github.com/migasfree/migasfree-frontend/blob/master/LICENSE).
+HertzBeat is free software, released under [GNU GPL v3](https://github.com/HertzBeat/HertzBeat-frontend/blob/master/LICENSE).
 
 ## Install the dependencies
 
@@ -47,8 +47,8 @@ quasar build
 
 ### Dashboard (light mode)
 
-![Dashboard](https://github.com/migasfree/migasfree-frontend/blob/master/screenshots/dashboard.png)
+![Dashboard](https://github.com/HertzBeat/HertzBeat-frontend/blob/master/screenshots/dashboard.png)
 
 ### Computers list (dark mode)
 
-![Computers list](https://github.com/migasfree/migasfree-frontend/blob/master/screenshots/computers_list.png)
+![Computers list](https://github.com/HertzBeat/HertzBeat-frontend/blob/master/screenshots/computers_list.png)

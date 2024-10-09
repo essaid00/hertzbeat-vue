@@ -4,16 +4,13 @@
       <q-item>
         <q-item-section avatar>
           <q-avatar>
-            <img alt="Migasfree logo" src="~assets/migasfree-logo.svg" />
+            <img alt="HertzBeat logo" src="~assets/HertzBeat-logo.svg" />
           </q-avatar>
         </q-item-section>
 
         <q-item-section>
           <q-item-label>{{ label.search }}</q-item-label>
-          <q-item-label
-            caption
-            :class="$q.dark.isActive ? 'text-white' : 'text-black'"
-          >
+          <q-item-label caption :class="$q.dark.isActive ? 'text-white' : 'text-black'">
             {{ label.uuid }}
           </q-item-label>
         </q-item-section>

@@ -1,32 +1,12 @@
 <template>
-  <q-input
-    v-model="monthPicked"
-    readonly
-    outlined
-    dense
-    input-class="cursor-pointer"
-    :label="label"
-    @click="monthPicker.show()"
-  >
+  <q-input v-model="monthPicked" readonly outlined dense input-class="cursor-pointer" :label="label"
+    @click="monthPicker.show()">
     <template #append>
       <q-icon name="event" class="cursor-pointer">
-        <q-popup-proxy
-          ref="monthPicker"
-          transition-show="scale"
-          transition-hide="scale"
-        >
-          <q-date
-            v-model="monthPicked"
-            mask="YYYY-MM"
-            minimal
-            flat
-            emit-immediately
-            default-view="Years"
-            :navigation-min-year-month="minYearMonth"
-            :navigation-max-year-month="maxYearMonth"
-            :locale="localeDate"
-            @update:model-value="checkValue"
-          />
+        <q-popup-proxy ref="monthPicker" transition-show="scale" transition-hide="scale">
+          <q-date v-model="monthPicked" mask="YYYY-MM" minimal flat emit-immediately default-view="Years"
+            :navigation-min-year-month="minYearMonth" :navigation-max-year-month="maxYearMonth" :locale="localeDate"
+            @update:model-value="checkValue" />
         </q-popup-proxy>
       </q-icon>
     </template>
@@ -36,7 +16,7 @@
 <script>
 import { ref, computed } from 'vue'
 
-import { MIGASFREE_MIN_YEAR } from 'config/app.conf'
+import { HertzBeat_MIN_YEAR } from 'config/app.conf'
 import useDate from 'composables/date'
 
 export default {
@@ -66,7 +46,7 @@ export default {
     })
 
     const minYearMonth = computed(() => {
-      const date = new Date(MIGASFREE_MIN_YEAR, 1)
+      const date = new Date(HertzBeat_MIN_YEAR, 1)
       return date.toISOString().slice(0, 7).replace('-', '/')
     })
 

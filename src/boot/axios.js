@@ -8,7 +8,7 @@ const api = axios.create({
     encode: parse,
     serialize: stringify,
   },
-  baseURL: process.env.MIGASFREE_SERVER || 'http://localhost',
+  baseURL: process.env.HertzBeat_SERVER || 'http://localhost',
 })
 
 export default boot(({ app, router }) => {
@@ -26,7 +26,7 @@ export default boot(({ app, router }) => {
         currentLang.split('_')[0]
       };q=0.9`
 
-      console.log('[ REQUEST ]', config.url, config.params, config)
+      // console.log('[ REQUEST ]', config.url, config.params, config)
 
       return config
     },
@@ -38,7 +38,7 @@ export default boot(({ app, router }) => {
 
   api.interceptors.response.use(
     (response) => {
-      console.log('[ RESPONSE ]', response.config.url, response)
+      //console.log('[ RESPONSE ]', response.config.url, response)
       return response
     },
 
@@ -54,6 +54,9 @@ export default boot(({ app, router }) => {
           case 401:
             // notify.warn('Please login again', 'Session Expired')
             LocalStorage.remove('auth.token')
+            LocalStorage.remove('auth.user')
+            LocalStorage.remove('auth.loggedIn')
+
             router.push({ name: 'login' })
             break
 

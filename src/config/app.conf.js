@@ -7,11 +7,11 @@ export const MAX_RESULTS_PER_PAGE = 200
 
 export const EVENTS_HISTORY_HOURS = 72
 
-export const MIGASFREE_MIN_YEAR = 2010
+export const HertzBeat_MIN_YEAR = 2010
 
-export const MIGASFREE_SECONDS_MESSAGE_ALERT = 1800
+export const HertzBeat_SECONDS_MESSAGE_ALERT = 1800
 
-export const MIGASFREE_CHART_COLORS = [
+export const HertzBeat_CHART_COLORS = [
   '#5f98cf',
   '#434348',
   '#49a65e',
@@ -24,7 +24,7 @@ export const MIGASFREE_CHART_COLORS = [
   '#b381b3',
 ]
 
-export const MIGASFREE_CHART_DARK_COLORS = [
+export const HertzBeat_CHART_DARK_COLORS = [
   '#008FFB',
   '#00E396',
   '#FEB019',

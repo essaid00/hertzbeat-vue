@@ -172,8 +172,8 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: `Migasfree Frontend`,
-        short_name: `Migasfree Frontend`,
+        name: `HertzBeat Frontend`,
+        short_name: `HertzBeat Frontend`,
         description: `Systems Management System (frontend) (with Quasar framework)`,
         display: 'standalone',
         orientation: 'portrait',
@@ -237,7 +237,7 @@ module.exports = configure(function (ctx) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'migasfree-frontend',
+        appId: 'HertzBeat-frontend',
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain

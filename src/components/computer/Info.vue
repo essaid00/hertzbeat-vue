@@ -11,82 +11,48 @@
         <div class="col col-md col-sm">
           <q-btn-group v-if="isSuperUser">
             <q-input v-model="value" outlined :label="$gettext('Name')" />
-            <q-btn
-              color="primary"
-              icon="mdi-content-save-edit"
-              :loading="loading"
-              :disabled="loading"
-              @click="updateName"
-            >
-              <q-tooltip
-                ><translate>Save and continue editing</translate></q-tooltip
-              >
+            <q-btn color="primary" icon="mdi-content-save-edit" :loading="loading" :disabled="loading"
+              @click="updateName">
+              <q-tooltip>
+                <translate>Save and continue editing</translate>
+              </q-tooltip>
             </q-btn>
           </q-btn-group>
           <div v-else class="text-h5">
             {{ name }}
-            <q-btn
-              flat
-              icon="mdi-content-copy"
-              size="sm"
-              color="primary"
-              @click.stop="contentToClipboard(name)"
-              ><q-tooltip>{{ $gettext('Copy') }}</q-tooltip></q-btn
-            >
+            <q-btn flat icon="mdi-content-copy" size="sm" color="primary"
+              @click.stop="contentToClipboard(name)"><q-tooltip>{{ $gettext('Copy') }}</q-tooltip></q-btn>
           </div>
         </div>
       </div>
 
       <div class="row q-py-sm">
         <div class="col-6 col-md col-sm">
-          <q-icon
-            :name="appIcon('information')"
-            size="sm"
-            class="vertical-middle"
-          />
+          <q-icon :name="appIcon('information')" size="sm" class="vertical-middle" />
           <span class="vertical-middle">
             {{ fqdn }}
-            <q-tooltip
-              ><translate>full qualified domain name</translate></q-tooltip
-            >
+            <q-tooltip>
+              <translate>full qualified domain name</translate>
+            </q-tooltip>
           </span>
-          <q-btn
-            v-if="fqdn"
-            flat
-            icon="mdi-content-copy"
-            size="sm"
-            color="primary"
-            @click.stop="contentToClipboard(fqdn)"
-            ><q-tooltip>{{ $gettext('Copy') }}</q-tooltip></q-btn
-          >
+          <q-btn v-if="fqdn" flat icon="mdi-content-copy" size="sm" color="primary"
+            @click.stop="contentToClipboard(fqdn)"><q-tooltip>{{ $gettext('Copy') }}</q-tooltip></q-btn>
         </div>
 
         <div class="col-6 col-md col-sm">
-          <DateView
-            :value="createdAt"
-            icon="mdi-calendar-plus"
-            :tooltip-text="$gettext('Date of entry into the migasfree system')"
-          />
+          <DateView :value="createdAt" icon="mdi-calendar-plus"
+            :tooltip-text="$gettext('Date of entry into the HertzBeat system')" />
         </div>
       </div>
 
       <div class="row q-py-sm">
         <div class="col-6 col-md col-sm">
-          <MigasLink
-            model="platforms"
-            :pk="project.platform.id"
-            :value="project.platform.name"
-            :tooltip="$gettext('Platform')"
-          />
+          <MigasLink model="platforms" :pk="project.platform.id" :value="project.platform.name"
+            :tooltip="$gettext('Platform')" />
         </div>
 
         <div class="col-6 col-md col-sm">
-          <MigasLink
-            model="projects"
-            :pk="project.id"
-            :value="project.name"
-            :tooltip="$gettext('Project')"
-          />
+          <MigasLink model="projects" :pk="project.id" :value="project.name" :tooltip="$gettext('Project')" />
         </div>
       </div>
 
@@ -95,74 +61,43 @@
           <q-icon name="mdi-ip-network" size="sm" class="vertical-middle" />
           <span class="vertical-middle">
             {{ ipAddress }}
-            <q-tooltip><translate>ip address</translate></q-tooltip>
+            <q-tooltip>
+              <translate>ip address</translate>
+            </q-tooltip>
           </span>
-          <q-btn
-            v-if="ipAddress"
-            flat
-            icon="mdi-content-copy"
-            size="sm"
-            color="primary"
-            @click.stop="contentToClipboard(ipAddress)"
-            ><q-tooltip>{{ $gettext('Copy') }}</q-tooltip></q-btn
-          >
+          <q-btn v-if="ipAddress" flat icon="mdi-content-copy" size="sm" color="primary"
+            @click.stop="contentToClipboard(ipAddress)"><q-tooltip>{{ $gettext('Copy') }}</q-tooltip></q-btn>
         </div>
 
         <div class="col-6 col-md col-sm">
           <q-icon name="mdi-ip" size="sm" class="vertical-middle" />
           <span class="vertical-middle">
             {{ forwardedIpAddress }}
-            <q-tooltip><translate>forwarded ip address</translate></q-tooltip>
+            <q-tooltip>
+              <translate>forwarded ip address</translate>
+            </q-tooltip>
           </span>
-          <q-btn
-            v-if="forwardedIpAddress"
-            flat
-            icon="mdi-content-copy"
-            size="sm"
-            color="primary"
-            @click.stop="contentToClipboard(forwardedIpAddress)"
-            ><q-tooltip>{{ $gettext('Copy') }}</q-tooltip></q-btn
-          >
+          <q-btn v-if="forwardedIpAddress" flat icon="mdi-content-copy" size="sm" color="primary"
+            @click.stop="contentToClipboard(forwardedIpAddress)"><q-tooltip>{{ $gettext('Copy') }}</q-tooltip></q-btn>
         </div>
       </div>
     </q-card-section>
 
     <q-card-actions class="justify-between q-px-md">
-      <q-btn
-        :icon="appIcon('events')"
-        color="info"
-        text-color="black"
-        no-caps
-        :to="{
-          name: 'computer-events',
-          params: { id: cid },
-        }"
-        :label="$gettext('Events')"
-      />
+      <q-btn :icon="appIcon('events')" color="info" text-color="black" no-caps :to="{
+            name: 'computer-events',
+            params: { id: cid },
+          }" :label="$gettext('Events')" />
 
-      <q-btn
-        :icon="appIcon('simulate')"
-        color="info"
-        text-color="black"
-        no-caps
-        :to="{
-          name: 'computer-simulate',
-          params: { id: cid },
-        }"
-        :label="$gettext('Simulate synchronization')"
-      />
+      <q-btn :icon="appIcon('simulate')" color="info" text-color="black" no-caps :to="{
+            name: 'computer-simulate',
+            params: { id: cid },
+          }" :label="$gettext('Simulate synchronization')" />
 
-      <q-btn
-        icon="mdi-card-account-details-outline"
-        color="info"
-        text-color="black"
-        no-caps
-        :to="{
-          name: 'computer-label',
-          params: { id: cid },
-        }"
-        :label="$gettext('Identification')"
-      />
+      <q-btn icon="mdi-card-account-details-outline" color="info" text-color="black" no-caps :to="{
+            name: 'computer-label',
+            params: { id: cid },
+          }" :label="$gettext('Identification')" />
     </q-card-actions>
   </q-card>
 </template>
