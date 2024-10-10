@@ -2,8 +2,9 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
+
 // Zabbix API details
-const ZABBIX_API_URL = 'http://110.0.53.100/zabbix/api_jsonrpc.php';
+const ZABBIX_API_URL = 'http://110.0.53.8/zabbix/api_jsonrpc.php';
 const ZABBIX_USER = 'Admin';
 const ZABBIX_PASSWORD = 'zabbix';
 
@@ -57,14 +58,30 @@ const getStorageMetrics = async (authToken, hostId) => {
       params: {
         hostids: [hostId],
         search: {
-          key_: 'vfs.fs.size',  // Searches for storage-related items
+          key_: 'fs.fs.dependent.',  // Searches for storage-related items
         },
         output: ['key_', 'lastvalue'],  // Gets the key and the latest value
       },
       id: 3,
       auth: authToken,
     });
-    return response.data.result;
+    // return response.data.result;
+
+    const response2 = await axios.post(ZABBIX_API_URL, {
+      jsonrpc: '2.0',
+      method: 'item.get',
+      params: {
+        hostids: hostId,
+        search: {
+          key_: 'fs.fs.',  // Searches for storage-related items
+        },
+        output: 'extend',  // Gets the key and the latest value
+      },
+      id: 3,
+      auth: authToken,
+    });
+
+    return response2.data.result;
   } catch (err) {
     throw new Error(`Failed to fetch storage metrics for host ${hostId}`);
   }
@@ -102,8 +119,17 @@ onMounted(async () => {
         <li v-for="host in hosts" :key="host.hostid">
           <h3>{{ host.name }}</h3>
           <ul>
+
             <li v-for="metric in host.storage" :key="metric.itemid">
-              {{ metric.key_ }}: {{ metric.lastvalue }}
+              <q-linear-progress size="25px" value="0.3" color="accent">
+                <div class="absolute-full flex flex-start">
+                  <q-badge color="green " text-color="accent" label="6">
+
+                  </q-badge>
+                </div>
+              </q-linear-progress>
+
+              {{ metric.key_ }}: {{ metric.lastvalue }} {{ metric.description }}
             </li>
           </ul>
         </li>

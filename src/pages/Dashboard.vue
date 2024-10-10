@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useGettext } from 'vue3-gettext'
 import Carousel from 'components/ui/carousel.vue'
 import { useMeta } from 'quasar'
@@ -40,18 +40,19 @@ import Breadcrumbs from 'components/ui/Breadcrumbs'
 import Header from 'components/ui/Header'
 import SearchFilter from 'components/ui/SearchFilter'
 import PieChart from 'components/chart/Pie'
-
+import zabbix from 'pages/zabbix/storage.vue'
 import { appIcon, modelIcon } from 'composables/element'
 
 export default {
   components: {
-    Breadcrumbs, zabbix,
+    Breadcrumbs,
+    zabbix, Carousel,
     PieChart,
   },
   setup() {
 
     // Zabbix API details
-    const ZABBIX_API_URL = 'http://110.0.53.100/zabbix/api_jsonrpc.php';
+    const ZABBIX_API_URL = 'http://110.0.53.8/zabbix/api_jsonrpc.php';
     const ZABBIX_USER = 'Admin';
     const ZABBIX_PASSWORD = 'zabbix';
 
@@ -152,12 +153,12 @@ export default {
     }
 
     return {
-      hostData,
+      hostData, loading,
       title,
       titleIcon,
       breadcrumbs,
       url,
-      goTo,
+      goTo, error,
 
     }
   },
