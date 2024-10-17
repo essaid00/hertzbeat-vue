@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, reactive } from 'vue';
 import axios from 'axios';
 
 
@@ -8,7 +8,7 @@ const ZABBIX_API_URL = 'http://110.0.53.8/zabbix/api_jsonrpc.php';
 const ZABBIX_USER = 'Admin';
 const ZABBIX_PASSWORD = 'zabbix';
 
-const hosts = ref([]);
+const hosts = reactive([]);
 const loading = ref(true);
 const error = ref(null);
 
@@ -52,20 +52,6 @@ const getHosts = async (authToken) => {
 // Function to get storage metrics for a host
 const getStorageMetrics = async (authToken, hostId) => {
   try {
-    const response = await axios.post(ZABBIX_API_URL, {
-      jsonrpc: '2.0',
-      method: 'item.get',
-      params: {
-        hostids: [hostId],
-        search: {
-          key_: 'fs.fs.dependent.',  // Searches for storage-related items
-        },
-        output: ['key_', 'lastvalue'],  // Gets the key and the latest value
-      },
-      id: 3,
-      auth: authToken,
-    });
-    // return response.data.result;
 
     const response2 = await axios.post(ZABBIX_API_URL, {
       jsonrpc: '2.0',
@@ -73,20 +59,78 @@ const getStorageMetrics = async (authToken, hostId) => {
       params: {
         hostids: hostId,
         search: {
-          key_: 'fs.fs.',  // Searches for storage-related items
+          // key_: 'fs.fs.dependent.',  // Searches for storage-related items
         },
         output: 'extend',  // Gets the key and the latest value
       },
       id: 3,
       auth: authToken,
     });
-
-    return response2.data.result;
+    console.log('getStorageMetrics')
+    console.log(response2.data.result)
+    const result = response2.data.result.reduce((acc, obj) => {
+      acc[obj.key_] = obj.lastvalue
+      return acc;
+    }, {});
+    console.log(result)
+    return result;
   } catch (err) {
+    console.log(err)
     throw new Error(`Failed to fetch storage metrics for host ${hostId}`);
   }
 };
+const testval = (key) => {
 
+
+  return ref(true)
+
+}
+
+const testbooleen = (key) => {
+
+  if (
+    key.includes('OracleOraDb')
+    || key.includes('Eaton')
+    || key.includes('TeamViewer')
+    || key.includes('uvnc_service')
+
+
+
+  ) {
+    return true
+  } else {
+    return false
+  }
+}
+const converttoGbate = (key) => {
+  console.log('converttoGbateconverttoGbateconverttoGbateconverttoGbateconverttoGbate')
+  console.log(key)
+  return (key / 1024 ** 3)
+    .toFixed(2)
+}
+const testcontain = (key) => {
+
+  console.log(key)
+  if (key.includes('vfs.fs.dependent.size[D:,pused]')
+    || key.includes('vfs.fs.dependent.size[C:,pused]')
+    || key.includes('vfs.fs.dependent.size[S:,pused]')
+    || key.includes('vfs.fs.dependent.size[F:,pused]')
+    || key.includes('vfs.fs.dependent.size[E:,pused]')
+    || key.includes('vfs.fs.pused[4]')
+    || key.includes('vfs.fs.pused[1]')
+    || key.includes('vfs.fs.pused[2]')
+    || key.includes('vfs.fs.pused[3]')
+    || key.includes('vfs.fs.dependent.size[C:,free]')
+  ) {
+    return true
+  } else {
+    return false
+  }
+}
+const link = (data) => {
+  return ((parseFloat(data))).toFixed(2) + "%"
+
+}
 // Fetch data when component mounts
 onMounted(async () => {
   try {
@@ -95,18 +139,23 @@ onMounted(async () => {
 
     // Loop through all hosts to get storage metrics
     for (const host of hostList) {
+      console.log('rrrrrrrrrrrrrrrrrrrrr')
       const metrics = await getStorageMetrics(authToken, host.hostid);
-      hosts.value.push({
+      console.log(metrics)
+      const groupByKey = metrics
+      hosts.push({
         name: host.name,
         hostid: host.hostid,
-        storage: metrics,  // Add storage metrics to the host object
+        storage: groupByKey,  // Add storage metrics to the host object
       });
     }
+    console.log(hosts)
   } catch (err) {
     error.value = err.message;
   } finally {
     loading.value = false;
   }
+
 });
 </script>
 <template>
@@ -117,21 +166,78 @@ onMounted(async () => {
       <div v-if="error">{{ error }}</div>
       <ul v-if="hosts.length > 0">
         <li v-for="host in hosts" :key="host.hostid">
-          <h3>{{ host.name }}</h3>
-          <ul>
+          <h3 class="text-h2 q-ma-md">{{ host.name }}</h3>
 
-            <li v-for="metric in host.storage" :key="metric.itemid">
-              <q-linear-progress size="25px" value="0.3" color="accent">
-                <div class="absolute-full flex flex-start">
-                  <q-badge color="green " text-color="accent" label="6">
 
-                  </q-badge>
-                </div>
-              </q-linear-progress>
+          <div class="row q-pa-md q-gutter-md">
 
-              {{ metric.key_ }}: {{ metric.lastvalue }} {{ metric.description }}
-            </li>
-          </ul>
+
+
+            <div class="col-6 col-md col-sm">
+              <h6 class="text-h6 q-ma-md ">storage</h6>
+              <template v-for="(serie, index) in host.storage" :key="index">
+                {{ serie }}
+                {{ index }}
+                <p v-if="index == 'vfs.fs.dependent.size[C:,free]'">Espace : {{ converttoGbate(serie) }}GB</p>
+                <p v-if="index == 'system.uname'">SYSTEM : : {{ serie }}</p>
+
+                <q-linear-progress v-if="index == 'vfs.fs.dependent.size[C:,pused]'" size="25px" :value="(serie) / 100"
+                  color="accent">
+                  <div class="absolute-full flex flex-center">
+                    <q-badge color="green " text-color="accent" :label="link(serie)">
+
+                    </q-badge>
+                  </div>
+                </q-linear-progress>
+                <q-linear-progress v-if="index == 'vfs.fs.dependent.size[D:,pused]'" size="25px" :value="(serie) / 100"
+                  color="accent">
+                  <div class="absolute-full flex flex-center">
+                    <q-badge color="green " text-color="accent" :label="link(serie)">
+
+                    </q-badge>
+                  </div>
+                </q-linear-progress>
+                <q-linear-progress v-if="index == 'vfs.fs.dependent.size[E:,pused]'" size="25px" :value="(serie) / 100"
+                  color="accent">
+                  <div class="absolute-full flex flex-center">
+                    <q-badge color="green " text-color="accent" :label="link(serie)">
+
+                    </q-badge>
+                  </div>
+                </q-linear-progress>
+                <q-linear-progress v-if="index == 'vfs.fs.dependent.size[S:,pused]'" size="25px" :value="(serie) / 100"
+                  color="accent">
+                  <div class="absolute-full flex flex- flex-center">
+                    <q-badge color="green " text-color="accent" :label="link(serie)">
+
+                    </q-badge>
+                  </div>
+                </q-linear-progress>
+              </template>
+            </div>
+
+
+
+
+
+
+            <div class="col-6 col-md col-sm">
+
+              <h6 class="text-h6 q-ma-md ">Service</h6>
+              <template v-for="metric in host.storage" :key="metric.itemid">
+
+                {{ metric }}:
+              </template>
+            </div>
+
+
+          </div>
+
+
+
+
+
+
         </li>
       </ul>
     </div>
