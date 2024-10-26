@@ -1,8 +1,8 @@
 <script setup>
 import { ref, onMounted, reactive } from 'vue';
 import axios from 'axios';
-
-
+import BooleanView from 'components/ui/BooleanView'
+import DateView from 'components/ui/DateView'
 // Zabbix API details
 const ZABBIX_API_URL = 'http://110.0.53.8/zabbix/api_jsonrpc.php';
 const ZABBIX_USER = 'Admin';
@@ -213,6 +213,51 @@ onMounted(async () => {
                     </q-badge>
                   </div>
                 </q-linear-progress>
+                <q-linear-progress v-if="index == 'vfs.fs.pused[1]'" size="25px" :value="(serie) / 100" color="accent">
+                  <div class="absolute-full flex flex- flex-center">
+                    <q-badge color="green " text-color="accent" :label="link(serie)">
+
+                    </q-badge>
+                  </div>
+                </q-linear-progress>
+                <q-linear-progress v-if="index == 'vfs.fs.pused[5]'" size="25px" :value="(serie) / 100" color="accent">
+                  <div class="absolute-full flex flex- flex-center">
+                    <q-badge color="green " text-color="accent" :label="link(serie)">
+
+                    </q-badge>
+                  </div>
+                </q-linear-progress>
+
+                <span v-if="index == 'system.uptime'">
+                  <BooleanView :value="true" />
+                </span>
+                <span v-if="index == 'system.uptime'">
+                  <BooleanView :value="false" />
+                </span>
+                <span v-if="index == 'system.uptime'">
+                  <DateView :value="serie" />
+                </span>
+                <q-linear-progress v-if="index == 'vfs.fs.pused[2]'" size="25px" :value="(serie) / 100" color="accent">
+                  <div class="absolute-full flex flex- flex-center">
+                    <q-badge color="green " text-color="accent" :label="link(serie)">
+
+                    </q-badge>
+                  </div>
+                </q-linear-progress>
+                <q-linear-progress v-if="index == 'vfs.fs.pused[3]'" size="25px" :value="(serie) / 100" color="accent">
+                  <div class="absolute-full flex flex- flex-center">
+                    <q-badge color="green " text-color="accent" :label="link(serie)">
+
+                    </q-badge>
+                  </div>
+                </q-linear-progress>
+                <q-linear-progress v-if="index == 'vfs.fs.pused[4]'" size="25px" :value="(serie) / 100" color="accent">
+                  <div class="absolute-full flex flex- flex-center">
+                    <q-badge color="green " text-color="accent" :label="link(serie)">
+
+                    </q-badge>
+                  </div>
+                </q-linear-progress>
               </template>
             </div>
 
@@ -224,17 +269,50 @@ onMounted(async () => {
             <div class="col-6 col-md col-sm">
 
               <h6 class="text-h6 q-ma-md ">Service</h6>
-              <template v-for="metric in host.storage" :key="metric.itemid">
+              <q-card flat bordered>
+                <q-card-section>
+                  <template v-for="(serie, index) in host.storage" :key="index">
 
-                {{ metric }}:
-              </template>
+
+                    <div class="row">
+                      <div class="col">
+                        <div v-translate class="text-h5">General</div>
+                      </div>
+                    </div>
+
+                    <div class="row q-py-sm">
+                      <div class="col-6 col-md col-sm">
+                        <q-icon name="mdi-ip-network" size="sm" class="vertical-middle" />
+                        <span class="vertical-middle">
+                          <p v-if="index == 'vfs.fs.dependent.size[C:,free]'">Espace : {{ converttoGbate(serie) }}GB</p>
+                          <q-tooltip>
+                            <translate>ip address</translate>
+                          </q-tooltip>
+                        </span>
+                        <q-btn v-if="'vfs.fs.dependent.size[C:, free]'" flat icon="mdi-content-copy" size="sm"
+                          color="primary" @click.stop="converttoGbate(serie)"><q-tooltip>{{ converttoGbate(serie)
+                            }}</q-tooltip></q-btn>
+                      </div>
+
+                      <div class="col-6 col-md col-sm">
+                        <q-icon name="mdi-ip" size="sm" class="vertical-middle" />
+                        <span class="vertical-middle">
+                          converttoGbate(serie)
+                          <q-tooltip>
+                            <translate>forwarded ip address</translate>
+                          </q-tooltip>
+                        </span>
+
+                      </div>
+                    </div>
+
+                  </template>
+                </q-card-section>
+              </q-card>
             </div>
 
 
           </div>
-
-
-
 
 
 
