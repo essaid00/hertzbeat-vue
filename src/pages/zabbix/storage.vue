@@ -30,7 +30,17 @@ const authenticate = async () => {
     throw new Error(`Authentication failed: ${err.response?.data?.message || err.message}`);
   }
 };
+function isZeroKey(key) {
+  if (key === "0") {
+    return true;
+  }
+  if (key === "1") {
+    return false;
+  }
 
+  return key;
+
+}
 // Function to get all hosts
 const getHosts = async (authToken) => {
   try {
@@ -66,13 +76,13 @@ const getStorageMetrics = async (authToken, hostId) => {
       id: 3,
       auth: authToken,
     });
-    console.log('getStorageMetrics')
+    //console.log('getStorageMetrics')
     console.log(response2.data.result)
     const result = response2.data.result.reduce((acc, obj) => {
-      acc[obj.key_] = obj.lastvalue
+      acc[obj.key_] = isZeroKey(obj.lastvalue)
       return acc;
     }, {});
-    console.log(result)
+    // console.log(result)
     return result;
   } catch (err) {
     console.log(err)
@@ -93,7 +103,7 @@ const testbooleen = (key) => {
     || key.includes('Eaton')
     || key.includes('TeamViewer')
     || key.includes('uvnc_service')
-
+    || key.includes('OracleService')
 
 
   ) {
@@ -175,90 +185,97 @@ onMounted(async () => {
 
             <div class="col-6 col-md col-sm">
               <h6 class="text-h6 q-ma-md ">storage</h6>
-              <template v-for="(serie, index) in host.storage" :key="index">
-                {{ serie }}
-                {{ index }}
-                <p v-if="index == 'vfs.fs.dependent.size[C:,free]'">Espace : {{ converttoGbate(serie) }}GB</p>
-                <p v-if="index == 'system.uname'">SYSTEM : : {{ serie }}</p>
+              <q-card flat bordered>
+                <template v-for="(serie, index) in host.storage" :key="index">
+                  {{ serie }}
+                  {{ index }}
+                  <p v-if="index == 'vfs.fs.dependent.size[C:,free]'">Espace : {{ converttoGbate(serie) }}GB</p>
+                  <p v-if="index == 'system.uname'">SYSTEM : : {{ serie }}</p>
 
-                <q-linear-progress v-if="index == 'vfs.fs.dependent.size[C:,pused]'" size="25px" :value="(serie) / 100"
-                  color="accent">
-                  <div class="absolute-full flex flex-center">
-                    <q-badge color="green " text-color="accent" :label="link(serie)">
+                  <q-linear-progress v-if="index == 'vfs.fs.dependent.size[C:,pused]'" size="25px"
+                    :value="(serie) / 100" color="accent">
+                    <div class="absolute-full flex flex-center">
+                      <q-badge color="green " text-color="accent" :label="link(serie)">
 
-                    </q-badge>
-                  </div>
-                </q-linear-progress>
-                <q-linear-progress v-if="index == 'vfs.fs.dependent.size[D:,pused]'" size="25px" :value="(serie) / 100"
-                  color="accent">
-                  <div class="absolute-full flex flex-center">
-                    <q-badge color="green " text-color="accent" :label="link(serie)">
+                      </q-badge>
+                    </div>
+                  </q-linear-progress>
+                  <q-linear-progress v-if="index == 'vfs.fs.dependent.size[D:,pused]'" size="25px"
+                    :value="(serie) / 100" color="accent">
+                    <div class="absolute-full flex flex-center">
+                      <q-badge color="green " text-color="accent" :label="link(serie)">
 
-                    </q-badge>
-                  </div>
-                </q-linear-progress>
-                <q-linear-progress v-if="index == 'vfs.fs.dependent.size[E:,pused]'" size="25px" :value="(serie) / 100"
-                  color="accent">
-                  <div class="absolute-full flex flex-center">
-                    <q-badge color="green " text-color="accent" :label="link(serie)">
+                      </q-badge>
+                    </div>
+                  </q-linear-progress>
+                  <q-linear-progress v-if="index == 'vfs.fs.dependent.size[E:,pused]'" size="25px"
+                    :value="(serie) / 100" color="accent">
+                    <div class="absolute-full flex flex-center">
+                      <q-badge color="green " text-color="accent" :label="link(serie)">
 
-                    </q-badge>
-                  </div>
-                </q-linear-progress>
-                <q-linear-progress v-if="index == 'vfs.fs.dependent.size[S:,pused]'" size="25px" :value="(serie) / 100"
-                  color="accent">
-                  <div class="absolute-full flex flex- flex-center">
-                    <q-badge color="green " text-color="accent" :label="link(serie)">
+                      </q-badge>
+                    </div>
+                  </q-linear-progress>
+                  <q-linear-progress v-if="index == 'vfs.fs.dependent.size[S:,pused]'" size="25px"
+                    :value="(serie) / 100" color="accent">
+                    <div class="absolute-full flex flex- flex-center">
+                      <q-badge color="green " text-color="accent" :label="link(serie)">
 
-                    </q-badge>
-                  </div>
-                </q-linear-progress>
-                <q-linear-progress v-if="index == 'vfs.fs.pused[1]'" size="25px" :value="(serie) / 100" color="accent">
-                  <div class="absolute-full flex flex- flex-center">
-                    <q-badge color="green " text-color="accent" :label="link(serie)">
+                      </q-badge>
+                    </div>
+                  </q-linear-progress>
+                  <q-linear-progress v-if="index == 'vfs.fs.pused[1]'" size="25px" :value="(serie) / 100"
+                    color="accent">
+                    <div class="absolute-full flex flex- flex-center">
+                      <q-badge color="green " text-color="accent" :label="link(serie)">
 
-                    </q-badge>
-                  </div>
-                </q-linear-progress>
-                <q-linear-progress v-if="index == 'vfs.fs.pused[5]'" size="25px" :value="(serie) / 100" color="accent">
-                  <div class="absolute-full flex flex- flex-center">
-                    <q-badge color="green " text-color="accent" :label="link(serie)">
+                      </q-badge>
+                    </div>
+                  </q-linear-progress>
+                  <q-linear-progress v-if="index == 'vfs.fs.pused[5]'" size="25px" :value="(serie) / 100"
+                    color="accent">
+                    <div class="absolute-full flex flex- flex-center">
+                      <q-badge color="green " text-color="accent" :label="link(serie)">
 
-                    </q-badge>
-                  </div>
-                </q-linear-progress>
+                      </q-badge>
+                    </div>
+                  </q-linear-progress>
 
-                <span v-if="index == 'system.uptime'">
-                  <BooleanView :value="true" />
-                </span>
-                <span v-if="index == 'system.uptime'">
-                  <BooleanView :value="false" />
-                </span>
-                <span v-if="index == 'system.uptime'">
-                  <DateView :value="serie" />
-                </span>
-                <q-linear-progress v-if="index == 'vfs.fs.pused[2]'" size="25px" :value="(serie) / 100" color="accent">
-                  <div class="absolute-full flex flex- flex-center">
-                    <q-badge color="green " text-color="accent" :label="link(serie)">
+                  <span v-if="index == 'system.uptime'">
+                    <BooleanView :value="true" />
+                  </span>
+                  <span v-if="index == 'system.uptime'">
+                    <BooleanView :value="false" />
+                  </span>
+                  <span v-if="index == 'system.uptime'">
+                    <DateView :value="serie" />
+                  </span>
+                  <q-linear-progress v-if="index == 'vfs.fs.pused[2]'" size="25px" :value="(serie) / 100"
+                    color="accent">
+                    <div class="absolute-full flex flex- flex-center">
+                      <q-badge color="green " text-color="accent" :label="link(serie)">
 
-                    </q-badge>
-                  </div>
-                </q-linear-progress>
-                <q-linear-progress v-if="index == 'vfs.fs.pused[3]'" size="25px" :value="(serie) / 100" color="accent">
-                  <div class="absolute-full flex flex- flex-center">
-                    <q-badge color="green " text-color="accent" :label="link(serie)">
+                      </q-badge>
+                    </div>
+                  </q-linear-progress>
+                  <q-linear-progress v-if="index == 'vfs.fs.pused[3]'" size="25px" :value="(serie) / 100"
+                    color="accent">
+                    <div class="absolute-full flex flex- flex-center">
+                      <q-badge color="green " text-color="accent" :label="link(serie)">
 
-                    </q-badge>
-                  </div>
-                </q-linear-progress>
-                <q-linear-progress v-if="index == 'vfs.fs.pused[4]'" size="25px" :value="(serie) / 100" color="accent">
-                  <div class="absolute-full flex flex- flex-center">
-                    <q-badge color="green " text-color="accent" :label="link(serie)">
+                      </q-badge>
+                    </div>
+                  </q-linear-progress>
+                  <q-linear-progress v-if="index == 'vfs.fs.pused[4]'" size="25px" :value="(serie) / 100"
+                    color="accent">
+                    <div class="absolute-full flex flex- flex-center">
+                      <q-badge color="green " text-color="accent" :label="link(serie)">
 
-                    </q-badge>
-                  </div>
-                </q-linear-progress>
-              </template>
+                      </q-badge>
+                    </div>
+                  </q-linear-progress>
+                </template>
+              </q-card>
             </div>
 
 
@@ -271,42 +288,73 @@ onMounted(async () => {
               <h6 class="text-h6 q-ma-md ">Service</h6>
               <q-card flat bordered>
                 <q-card-section>
-                  <template v-for="(serie, index) in host.storage" :key="index">
 
+                  <div class="row">
+                    <div class="col">
+                      <div class="col-3 q-px-xs">
 
-                    <div class="row">
-                      <div class="col">
-                        <div v-translate class="text-h5">General</div>
                       </div>
-                    </div>
+                      <div class="flex items-center gap-x-6">
+                        <div class="text-gray-700 text-h6">
+                          <span class="text-xl font-bold text-orange-600">
+                            4.5 <q-icon name="star" size="sm" />
+                          </span>
+                          {{ host.storage['system.sw.os'] }}
+                        </div>
+                      </div>
 
-                    <div class="row q-py-sm">
-                      <div class="col-6 col-md col-sm">
+                    </div>
+                  </div>
+                  <div class="row q-py-sm">
+
+                    <template v-for="(serie, index) in host.storage" :key="index">
+
+                      <div v-if="index == 'vfs.fs.dependent.size[C:,free]'" class="col-6 ">
                         <q-icon name="mdi-ip-network" size="sm" class="vertical-middle" />
                         <span class="vertical-middle">
-                          <p v-if="index == 'vfs.fs.dependent.size[C:,free]'">Espace : {{ converttoGbate(serie) }}GB</p>
+                          <p>Espace : {{ converttoGbate(serie) }}GB</p>
                           <q-tooltip>
                             <translate>ip address</translate>
                           </q-tooltip>
                         </span>
-                        <q-btn v-if="'vfs.fs.dependent.size[C:, free]'" flat icon="mdi-content-copy" size="sm"
-                          color="primary" @click.stop="converttoGbate(serie)"><q-tooltip>{{ converttoGbate(serie)
-                            }}</q-tooltip></q-btn>
+
                       </div>
 
-                      <div class="col-6 col-md col-sm">
+                      <div v-if="index == 'vfs.fs.dependent.size[C:,free]'" class="col-6 ">
                         <q-icon name="mdi-ip" size="sm" class="vertical-middle" />
                         <span class="vertical-middle">
-                          converttoGbate(serie)
+                          {{ converttoGbate(serie) }}
                           <q-tooltip>
                             <translate>forwarded ip address</translate>
                           </q-tooltip>
                         </span>
 
                       </div>
-                    </div>
+                      <div v-if="index == 'agent.ping'" class="col-6 ">
 
-                  </template>
+                        <span class="vertical-middle">
+                          Ping
+                          <q-tooltip>
+                            <translate>la connexion au serveur</translate>
+                          </q-tooltip>
+                        </span>
+                        <BooleanView :value="true" />
+
+                      </div>
+
+                      <div v-if="testbooleen(index)" class="col-6 ">
+
+                        <span class="vertical-middle">
+                          {{ index }}
+                          <q-tooltip>
+                            <translate>la connexion au serveur</translate>
+                          </q-tooltip>
+                        </span>
+                        <BooleanView :value="serie" />
+                      </div>
+
+                    </template>
+                  </div>
                 </q-card-section>
               </q-card>
             </div>
