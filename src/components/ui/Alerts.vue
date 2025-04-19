@@ -11,7 +11,13 @@
     </template>
 
     <q-list v-if="alerts">
-      <q-item v-for="(item, index) in alerts" :key="index" v-close-popup clickable :to="resolveAlertLink(item.api)">
+      <q-item
+        v-for="(item, index) in alerts"
+        :key="index"
+        v-close-popup
+        clickable
+        :to="resolveAlertLink(item.api)"
+      >
         <q-item-section avatar>
           <q-icon :name="target(item.target)" />
         </q-item-section>
@@ -21,8 +27,9 @@
         </q-item-section>
 
         <q-item-section side top>
-          <q-chip :color="level(item.level)" :text-color="textColor(item.level)"><strong>{{ item.result
-              }}</strong></q-chip>
+          <q-chip :color="level(item.level)" :text-color="textColor(item.level)"
+            ><strong>{{ item.result }}</strong></q-chip
+          >
         </q-item-section>
       </q-item>
     </q-list>
@@ -98,7 +105,7 @@ export default defineComponent({
 
       totalAlerts.value = alerts.value.reduce(
         (accumulator, current) => accumulator + parseInt(current.result),
-        0,
+        0
       )
     }
 
@@ -191,9 +198,7 @@ export default defineComponent({
     const connectWS = () => {
       const wsScheme = window.location.protocol === 'https:' ? 'wss' : 'ws'
       console.log(`${wsScheme}://${uiStore.server.split('//')[1]}ws/`)
-      socket.value = new WebSocket(
-        `http://localhost:1157/ws/websocket`,
-      )
+      socket.value = new WebSocket(`http://localhost:1157/ws/websocket`)
 
       socket.value.onmessage = (event) => {
         const response = JSON.parse(event.data)
@@ -216,7 +221,7 @@ export default defineComponent({
       console.log(loggedIn.value)
       if (loggedIn.value) {
         await loadAlerts()
-        connectWS()
+        //  connectWS()
       }
     })
 
