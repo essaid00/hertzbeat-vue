@@ -1,10 +1,12 @@
 <template>
-  <q-input v-model="monthPicked" readonly outlined dense input-class="cursor-pointer" :label="label"
+  <q-input
+v-model="monthPicked" readonly outlined dense input-class="cursor-pointer" :label="label"
     @click="monthPicker.show()">
     <template #append>
       <q-icon name="event" class="cursor-pointer">
         <q-popup-proxy ref="monthPicker" transition-show="scale" transition-hide="scale">
-          <q-date v-model="monthPicked" mask="YYYY-MM" minimal flat emit-immediately default-view="Years"
+          <q-date
+v-model="monthPicked" mask="YYYY-MM" minimal flat emit-immediately default-view="Years"
             :navigation-min-year-month="minYearMonth" :navigation-max-year-month="maxYearMonth" :locale="localeDate"
             @update:model-value="checkValue" />
         </q-popup-proxy>

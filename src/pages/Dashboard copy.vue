@@ -10,7 +10,8 @@
 
     <div class="row q-pb-md">
       <div class="col-12">
-        <q-list id="events-history" :class="[
+        <q-list
+id="events-history" :class="[
       'q-card q-card--flat no-shadow',
       $q.dark.isActive ? 'q-card--dark q-dark' : '',
     ]" bordered>
@@ -28,14 +29,17 @@
               <q-spinner-dots color="primary" size="3em" />
             </div>
 
-            <StackedBarChart v-show="!loading" :title="$gettext('Events History')" :show-title="false" borderless
+            <StackedBarChart
+v-show="!loading" :title="$gettext('Events History')" :show-title="false" borderless
               :initial-data="eventsHistory" @get-link="goTo">
               <template #selector>
                 <q-card-section class="row justify-center q-py-none">
-                  <q-input v-model="lastHours" type="number" class="q-ma-sm" outlined dense
+                  <q-input
+v-model="lastHours" type="number" class="q-ma-sm" outlined dense
                     :label="$gettext('Last Hours')" @keydown.enter="updateEventsHistory" />
 
-                  <q-btn icon="mdi-refresh" class="q-ma-sm" :disabled="loading" :loading="loading"
+                  <q-btn
+icon="mdi-refresh" class="q-ma-sm" :disabled="loading" :loading="loading"
                     :label="$gettext('Update')" @click="updateEventsHistory" />
                 </q-card-section>
               </template>
@@ -54,7 +58,8 @@
         <div v-if="loadingMonthlySyncs" class="text-center">
           <q-spinner-dots color="primary" size="3em" />
         </div>
-        <StackedBarChart v-show="!loadingMonthlySyncs" id="monthly-syncs" :title="monthlySyncsTitle"
+        <StackedBarChart
+v-show="!loadingMonthlySyncs" id="monthly-syncs" :title="monthlySyncsTitle"
           :initial-data="monthlySyncs" @get-link="goTo">
           <template #selector>
             <q-card-section class="row justify-center q-py-none">
@@ -62,7 +67,8 @@
 
               <MonthInput v-model="end" class="q-ma-sm" :label="$gettext('Final Month')" />
 
-              <q-btn icon="mdi-refresh" class="q-ma-sm" :disabled="loadingMonthlySyncs" :loading="loadingMonthlySyncs"
+              <q-btn
+icon="mdi-refresh" class="q-ma-sm" :disabled="loadingMonthlySyncs" :loading="loadingMonthlySyncs"
                 :label="$gettext('Update')" @click="updateMonthlySyncs" />
             </q-card-section>
           </template>

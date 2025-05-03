@@ -15,7 +15,7 @@
         expand-separator
         icon="computer"
         label="Operating System"
-        default-opened
+        popup
       >
         <q-card>
           <q-card-section>
@@ -72,7 +72,7 @@
         expand-separator
         icon="backup"
         label="Backup Information"
-        default-opened
+        popup
       >
         <q-card>
           <q-card-section>
@@ -134,6 +134,7 @@
       class="q-pt-none"
     >
       <q-expansion-item
+        header-class="bg-teal text-white"
         expand-separator
         icon="storage"
         label="Disk Space"
@@ -142,7 +143,10 @@
         <q-card>
           <q-card-section>
             <div
-              v-for="(disk, index) in systemInfo.disks"
+              v-for="(disk, index) in systemInfo.disks.filter((disk) => {
+                console.log(disk.totalSpace)
+                return disk.totalSpace != '0 GB'
+              })"
               :key="index"
               class="q-mb-md"
             >
@@ -184,7 +188,7 @@
         expand-separator
         icon="memory"
         label="Memory Usage"
-        default-opened
+        popup
       >
         <q-card>
           <q-card-section>
@@ -265,75 +269,112 @@
         </q-card>
       </q-expansion-item>
     </q-card-section>
+    <!-- Memory Information -->
+    <q-card-section v-if="systemInfo.majBaseDonnee" class="q-pt-none">
+      <q-expansion-item
+        expand-separator
+        icon="memory"
+        label="maj Base Donnee"
+        popup
+      >
+        <q-card>
+          <q-card-section>
+            <div class="row q-col-gutter-md">
+              <div class="col-24 col-md-24">
+                <q-item class="q-pa-md bg-grey-1 rounded-borders q-my-sm">
+                  <q-item-section>
+                    <!-- Styled header with icon -->
 
+                    <!-- Database update list with improved styling -->
+                    <div
+                      v-for="(disk, index) in systemInfo.majBaseDonnee"
+                      :key="index"
+                      class="q-mb-sm q-py-xs q-px-md bg-white shadow-1 rounded-borders"
+                    >
+                      <div class="row justify-between items-center">
+                        <div class="text-body2 text-weight-medium">
+                          {{ disk.table }}
+                        </div>
+                        <q-badge color="secondary" outline>
+                          {{ disk.date }}
+                        </q-badge>
+                      </div>
+                    </div>
+
+                    <!-- Optional: Add a refresh button or other action -->
+                  </q-item-section>
+                </q-item>
+              </div>
+            </div>
+          </q-card-section>
+        </q-card>
+      </q-expansion-item>
+    </q-card-section>
     <q-card-actions align="right">
-      <q-btn flat color="primary" label="Refresh" @click="$emit('refresh')" />
+      <q-btn flat color="primary" label="Actualiser" @click="refreshData" />
     </q-card-actions>
   </q-card>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script setup>
+import { computed } from 'vue'
 import { date } from 'quasar'
+import { toRef } from 'vue'
 
-export default defineComponent({
-  name: 'SystemInfoViewer',
-
-  props: {
-    systemInfo: {
-      type: Object,
-      required: true,
-    },
-  },
-
-  methods: {
-    formatDate(dateString) {
-      if (!dateString) return ''
-      // Assuming dateString format is "DD/MM/YYYY HH:mm:ss"
-      const parts = dateString.split(' ')
-      const dateParts = parts[0].split('/')
-      const timeParts = parts[1].split(':')
-
-      const dateObj = new Date(
-        parseInt(dateParts[2]), // year
-        parseInt(dateParts[1]) - 1, // month (0-indexed)
-        parseInt(dateParts[0]), // day
-        parseInt(timeParts[0]), // hour
-        parseInt(timeParts[1]), // minute
-        parseInt(timeParts[2]) // second
-      )
-
-      return date.formatDate(dateObj, 'MMMM D, YYYY HH:mm:ss')
-    },
-
-    getDiskPercentage(percentageStr) {
-      if (!percentageStr || percentageStr === 'NaN%') return 0
-      return parseFloat(percentageStr.replace(',', '.').replace('%', '')) / 100
-    },
-
-    getDiskColor(percentageStr) {
-      if (!percentageStr || percentageStr === 'NaN%') return 'grey'
-      const percentage = parseFloat(
-        percentageStr.replace(',', '.').replace('%', '')
-      )
-      if (percentage < 70) return 'positive'
-      if (percentage < 90) return 'warning'
-      return 'negative'
-    },
-
-    getMemoryPercentage(percentageStr) {
-      if (!percentageStr) return 0
-      return parseFloat(percentageStr.replace(',', '.').replace('%', '')) / 100
-    },
-
-    getHeapPercentage(memory) {
-      if (!memory || !memory.heapMemoryUsage || !memory.heapMemoryMax) return 0
-      const used = parseInt(memory.heapMemoryUsage.replace(' MB', ''))
-      const max = parseInt(memory.heapMemoryMax.replace(' MB', ''))
-      return used / max
-    },
+const props = defineProps({
+  systemInfo: {
+    type: Object,
+    required: true,
   },
 })
+
+const formatDate = (dateString) => {
+  if (!dateString) return ''
+  const parts = dateString.split(' ')
+  const dateParts = parts[0].split('/')
+  const timeParts = parts[1].split(':')
+
+  const dateObj = new Date(
+    parseInt(dateParts[2]), // year
+    parseInt(dateParts[1]) - 1, // month (0-indexed)
+    parseInt(dateParts[0]), // day
+    parseInt(timeParts[0]), // hour
+    parseInt(timeParts[1]), // minute
+    parseInt(timeParts[2]) // second
+  )
+
+  return date.formatDate(dateObj, 'DD/MM/YYYY HH:mm:ss')
+}
+
+const refreshData = () => {
+  $emit('refresh')
+}
+const getDiskPercentage = (percentageStr) => {
+  if (!percentageStr || percentageStr === 'NaN%') return 0
+  return parseFloat(percentageStr.replace(',', '.').replace('%', '')) / 100
+}
+
+const getDiskColor = (percentageStr) => {
+  if (!percentageStr || percentageStr === 'NaN%') return 'grey'
+  const percentage = parseFloat(
+    percentageStr.replace(',', '.').replace('%', '')
+  )
+  if (percentage < 70) return 'positive'
+  if (percentage < 90) return 'warning'
+  return 'negative'
+}
+
+const getMemoryPercentage = (percentageStr) => {
+  if (!percentageStr) return 0
+  return parseFloat(percentageStr.replace(',', '.').replace('%', '')) / 100
+}
+
+const getHeapPercentage = (memory) => {
+  if (!memory || !memory.heapMemoryUsage || !memory.heapMemoryMax) return 0
+  const used = parseInt(memory.heapMemoryUsage.replace(' MB', ''))
+  const max = parseInt(memory.heapMemoryMax.replace(' MB', ''))
+  return used / max
+}
 </script>
 
 <style scoped>

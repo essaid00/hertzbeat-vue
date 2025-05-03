@@ -8,14 +8,16 @@
           </div>
 
           <div class="col-auto">
-            <q-btn size="lg" padding="xs md" :disable="data.total <= 0" :color="critical ? 'negative' : 'info'"
+            <q-btn
+size="lg" padding="xs md" :disable="data.total <= 0" :color="critical ? 'negative' : 'info'"
               :text-color="critical ? 'white' : 'black'" :label="data.total" @click="goTo" />
           </div>
         </div>
       </q-card-section>
 
       <q-card-section class="echart-container q-pa-none">
-        <v-chart v-show="isChartVisible" ref="chart" :init-options="initOptions" :option="options" :loading="loading"
+        <v-chart
+v-show="isChartVisible" ref="chart" :init-options="initOptions" :option="options" :loading="loading"
           :loading-options="loadingOptions" autoresize @click="passData" />
         <q-banner v-if="noData" rounded class="bg-warning text-black q-ma-md">
           <translate>No data available.</translate>
@@ -43,7 +45,8 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          <q-table v-for="(serie, index) in dataGrid" :key="index" class="q-ma-md" :title="serie.title"
+          <q-table
+v-for="(serie, index) in dataGrid" :key="index" class="q-ma-md" :title="serie.title"
             :rows="serie.itemData" :columns="columns" :pagination="{ rowsPerPage: 0 }" row-key="name" hide-header
             hide-pagination flat bordered @row-click="rowClick">
             <template #top-right>

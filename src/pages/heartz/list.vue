@@ -1,6 +1,7 @@
 <template>
 
-  <q-table v-if="detailInfo.content.length > 0" class="q-ma-md" :rows="detailInfo.content" :columns="columnsCapability"
+  <q-table
+v-if="detailInfo.content.length > 0" class="q-ma-md" :rows="detailInfo.content" :columns="columnsCapability"
     row-key="name" :pagination="{ rowsPerPage: 0 }" hide-pagination flat bordered />
   <q-banner v-else class="text-white bg-info q-ma-md">
     <translate>No information</translate>

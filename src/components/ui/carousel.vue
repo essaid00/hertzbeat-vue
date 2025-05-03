@@ -59,7 +59,8 @@ export default {
 
     <q-card-section class="tw-text-primarytext q-pt-4 q-mt-2">
       <div class="bg-green">
-        <q-carousel v-model="displayedAsset" transition-prev="slide-right" transition-next="slide-left" animated
+        <q-carousel
+v-model="displayedAsset" transition-prev="slide-right" transition-next="slide-left" animated
           infinite arrows :autoplay="6000" vertical swipeable control-color="white" height="450px"
           navigation-icon="radio_button_unchecked" navigation padding
           class="bg-purple text-white shadow-1 rounded-borders">

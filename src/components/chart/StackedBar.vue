@@ -16,12 +16,14 @@
 
         <DayInput v-if="daySelector" v-model="end" class="q-ma-sm" :label="$gettext('Final Day')" />
 
-        <q-btn icon="mdi-refresh" class="q-ma-sm" :disabled="loading" :loading="loading" :label="$gettext('Update')"
+        <q-btn
+icon="mdi-refresh" class="q-ma-sm" :disabled="loading" :loading="loading" :label="$gettext('Update')"
           @click="loadData" />
       </q-card-section>
 
       <q-card-section class="echart-container q-py-none">
-        <v-chart v-show="isChartVisible" ref="chart" :init-options="initOptions" :option="options" :loading="loading"
+        <v-chart
+v-show="isChartVisible" ref="chart" :init-options="initOptions" :option="options" :loading="loading"
           :loading-options="loadingOptions" autoresize @click="passData" />
         <q-banner v-if="noData" rounded class="bg-warning text-black q-ma-md">
           <translate>No data available.</translate>
@@ -33,7 +35,8 @@
           <q-tooltip>{{ $gettext('Data View') }}</q-tooltip>
         </q-btn>
 
-        <q-btn-toggle v-if="isSelectedModeVisible" v-model="selectedMode" flat :options="[
+        <q-btn-toggle
+v-if="isSelectedModeVisible" v-model="selectedMode" flat :options="[
       { slot: 'multiple', value: 'multiple' },
       { slot: 'single', value: 'single' },
     ]" @update:model-value="updateSelectedMode">
@@ -64,7 +67,8 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          <q-table v-if="isChartVisible" class="q-ma-md" :pagination="{ rowsPerPage: 0 }" :rows="data.series"
+          <q-table
+v-if="isChartVisible" class="q-ma-md" :pagination="{ rowsPerPage: 0 }" :rows="data.series"
             hide-pagination flat bordered>
             <template #top-left>
               <q-btn flat :icon="appIcon('export')" color="primary" @click.stop="exportTable"><q-tooltip>{{
@@ -83,7 +87,8 @@
             <template #body="props">
               <q-tr :props="props">
                 <q-th>{{ props.row.name }}</q-th>
-                <q-td v-for="(item, index) in props.row.data" :key="index" class="cursor-pointer"
+                <q-td
+v-for="(item, index) in props.row.data" :key="index" class="cursor-pointer"
                   @click="selectCell(props.row.data[index])">
                   {{ item.value }}
                 </q-td>

@@ -257,17 +257,6 @@ onMounted(() => {
               <div class="text-h5">
                 {{ host.name }}<span class="q-ma-md">IP: {{ host.ip }}</span>
               </div>
-
-              <q-item-section avatar>
-                <q-icon
-                  name="network_check"
-                  :color="
-                    host.rawMetrics['zabbix[host,agent,available]']
-                      ? 'positive'
-                      : 'negative'
-                  "
-                />
-              </q-item-section>
             </q-card-section>
 
             <q-tabs

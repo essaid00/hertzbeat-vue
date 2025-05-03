@@ -5,7 +5,8 @@
       <q-btn stretch flat label="HertzBeat" type="a" href="http://www.HertzBeat.org/" no-caps size="16px"><q-tooltip>
           <translate>Website</translate>
         </q-tooltip></q-btn>
-      <q-btn stretch flat label="GPLv3" type="a" href="http://www.gnu.org/licenses/gpl.html" no-caps
+      <q-btn
+stretch flat label="GPLv3" type="a" href="http://www.gnu.org/licenses/gpl.html" no-caps
         size="16px"><q-tooltip>
           <translate>License</translate>
         </q-tooltip></q-btn>
