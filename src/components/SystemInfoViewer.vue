@@ -1,6 +1,6 @@
 <template>
   <q-card class="col-12 col-md-12">
-    <q-card-section>
+    <q-card-section class="bg-green">
       <div class="text-h6">
         {{ systemInfo.delegation.abrvDelegation }}
       </div>

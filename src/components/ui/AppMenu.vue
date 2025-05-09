@@ -1,6 +1,11 @@
 <template>
   <q-list>
-    <q-expansion-item v-for="(item, index) in items" :key="index" :icon="item.icon" :label="item.title">
+    <q-expansion-item
+      v-for="(item, index) in items"
+      :key="index"
+      :icon="item.icon"
+      :label="item.title"
+    >
       <q-list v-for="option in item.options" :key="option.to">
         <q-separator v-if="option.separatorBefore" />
         <q-item clickable :to="{ name: option.to }" :inset-level="1" exact>
@@ -27,7 +32,7 @@ export default {
   setup() {
     const { $gettext } = useGettext()
     const authStore = useAuthStore()
-    const MennuStore = useMennuStore();
+    const MennuStore = useMennuStore()
     onMounted(async () => {
       await MennuStore.loadMennu()
       // console.log('MennuStore.mennu')
@@ -286,8 +291,8 @@ export default {
       },
     ])
     return {
-      items
+      items,
     }
-  }
+  },
 }
 </script>

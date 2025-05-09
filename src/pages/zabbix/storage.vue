@@ -251,7 +251,7 @@ onMounted(() => {
               :class="
                 host.rawMetrics['zabbix[host,agent,available]']
                   ? 'bg-green text-white'
-                  : 'bg-warning text-white'
+                  : 'bg-negative text-white'
               "
             >
               <div class="text-h5">
@@ -284,7 +284,7 @@ onMounted(() => {
               {{ host.activeTab }}
               <q-tab-panel name="system">
                 <div class="row q-col-gutter-md">
-                  <div class="col-12 col-md-6">
+                  <div class="col-12 col-md-12">
                     <q-list bordered separator>
                       <q-item v-if="host.rawMetrics['agent.ping']">
                         <q-item-section avatar>

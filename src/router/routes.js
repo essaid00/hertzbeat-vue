@@ -6,18 +6,18 @@ const routes = [
       {
         path: '',
         name: 'home',
-        component: () => import('pages/Dashboard'),
+        component: () => import('pages/traking/zabbix'),
       },
       {
-        path: '/monitoring/monitors',
-        name: 'monitors',
-        component: () => import('pages/monitoring/index'),
+        path: '/traking/java-api',
+        name: 'java',
+        component: () => import('pages/traking/java'),
       },
 
       {
-        path: '/platforms/results',
-        name: 'platforms-list',
-        component: () => import('pages/platforms/results/list'),
+        path: '/traking/zabbix',
+        name: 'zabbix',
+        component: () => import('pages/traking/zabbix'),
       },
       {
         path: '/platforms/add',
